@@ -6,7 +6,7 @@
       '<nav class="navbar">' +
         '<div class="nav-container">' +
           '<div class="nav-left">' +
-            '<img class="nav-logo" src="' + base + '/image/image_holder.png" alt="Logo">' +
+            '<img class="nav-logo" src="' + base + '/image/aw_logo.png" alt="Logo">' +
           '</div>' +
           '<div class="nav-actions">' +
             '<a href="#" class="nav-icon-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">' +
