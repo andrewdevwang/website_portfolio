@@ -6,13 +6,15 @@
       '<nav class="navbar">' +
         '<div class="nav-container">' +
           '<div class="nav-left">' +
-            '<img class="nav-logo" src="' + base + '/image/aw_logo.png" alt="Logo">' +
+            '<a href="https://andrewdevwang.vercel.app/" class="nav-icon-link" aria-label="Logo">' +
+              '<img class="nav-logo" src="' + base + '/image/aw_logo.png" alt="Logo">' +
+            '</a>' +
           '</div>' +
           '<div class="nav-actions">' +
-            '<a href="#" class="nav-icon-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">' +
+            '<a href="https://github.com/andrewdevwang" class="nav-icon-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">' +
               '<img class="nav-icon" src="' + base + '/image/github_logo.png" alt="GitHub" />' +
             '</a>' +
-            '<a href="#" class="nav-icon-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">' +
+            '<a href="https://linkedin.com/in/andrewdevwang" class="nav-icon-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">' +
               '<img class="nav-icon" src="' + base + '/image/linkedin_logo.png" alt="LinkedIn" />' +
             '</a>' +
             '<a href="#" id="themeToggle" class="nav-icon-link" aria-label="Toggle Theme">' +
