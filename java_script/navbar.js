@@ -10,6 +10,14 @@
               '<img class="nav-logo" src="' + base + '/image/aw_logo.png" alt="Logo">' +
             '</a>' +
           '</div>' +
+          
+          '<div class="nav-middle">' +
+            '<a href="#who_i-am" class="nav-btn" role="button">Who I Am</a>' +
+            '<a href="#projects" class="nav-btn" role="button">Projects</a>' +
+            '<a href="#technology_and_skills" class="nav-btn" role="button">Technologies and Skills</a>' +
+            '<a href="#contact_me" class="nav-btn" role="button">Contact Me</a>' +
+          '</div>' +
+          
           '<div class="nav-actions">' +
             '<a href="https://github.com/andrewdevwang" class="nav-icon-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">' +
               '<img class="nav-icon" src="' + base + '/image/github_logo.png" alt="GitHub" />' +

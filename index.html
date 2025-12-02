@@ -10,7 +10,53 @@
     <div id="navbar"></div>
     <main>
         <h1>ANDREW WANG</h1>
+        <h2>
+          <span id="typewriter"></span><span id="cursor">|</span>
+        </h2>
+        <hr class="section-rule">
+        <h3>Who I Am</h3>
+        <h2>When I was</h2>
+        <hr class="section-rule">
+        <h3>Explore my Projects</h3>
+        <hr class="section-rule">
+        <h3>Technologies and Skills</h3>
+    <div class="tech-skill-logos">
+        <img src="image/python_logo.png" alt="Python Logo">
+        <img src="image/r_logo.png" alt="R Logo">
+        <img src="image/sql_logo.png" alt="SQL Logo">
+        <img src="image/java_logo.png" alt="Java Logo">
+        <img src="image/cplusplus_logo.png" alt="C++ Logo">
+        <img src="image/javascript_logo.png" alt="JavaScript Logo">
+        <img src="image/git_logo.png" alt="Git Logo">
+    </div>
+        <hr class="section-rule">
+        <h3>Contact Me</h3>
     </main>
     <script src="java_script/navbar.js"></script>
+    <div id="footer"></div>
+    <script src="java_script/footer.js"></script>
+    <script>
+      (function(){
+        var text = "Hey. I'm an aspiring developer, that's focused on sharpening practical programming and data analysis skills. I enjoy solving problems that require both technical rigor and an understanding of data and people. Explore my virtual workspace.";
+        var i = 0;
+        var out = document.getElementById('typewriter');
+        var cursor = document.getElementById('cursor');
+        if (!out || !cursor) return;
+        function tick(){
+          if (i <= text.length) {
+            out.textContent = text.slice(0, i++);
+            setTimeout(tick, 40);
+          } else {
+            cursor.style.display = 'none';
+          }
+        }
+        tick();
+      })()
+    </script>
 </body>
 </html>
+
+
+
+
+
