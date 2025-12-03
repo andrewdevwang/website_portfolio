@@ -12,8 +12,8 @@
           '</div>' +
           
           '<div class="nav-middle">' +
-            '<a href="#who_i-am" class="nav-btn" role="button">Who I Am</a>' +
-            '<a href="#projects" class="nav-btn" role="button">Projects</a>' +
+            '<a href="#who_i_am" class="nav-btn" role="button">Who I Am</a>' +
+            '<a href="#explore_my_projects" class="nav-btn" role="button">Explore My Projects</a>' +
             '<a href="#technology_and_skills" class="nav-btn" role="button">Technologies and Skills</a>' +
             '<a href="#contact_me" class="nav-btn" role="button">Contact Me</a>' +
           '</div>' +
@@ -59,5 +59,18 @@
       try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch (e) { /* ignore */ }
     });
   }
+
+  // Scrolling transition to section
+  var navLinks = document.querySelectorAll('.nav-btn[href^="#"]');
+  navLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var targetId = this.getAttribute('href').substring(1);
+      var target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
 })();
 
