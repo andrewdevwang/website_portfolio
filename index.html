@@ -32,6 +32,10 @@
             document.getElementById('main-content').classList.add('visible');
             // Enables scrolling after typewriter finishes
             document.body.classList.add('typewriter-done');
+            // Enables navbar buttons after fade in
+            document.querySelectorAll('.nav-btn').forEach(function(btn) {
+              btn.style.pointerEvents = '';
+            });
           }
         }
         tick();

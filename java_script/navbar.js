@@ -41,6 +41,12 @@
   }
   host.innerHTML = markup;
 
+  // Disables navbar buttons at the start until enabled in index.html
+  var navButtons = document.querySelectorAll('.nav-btn');
+  navButtons.forEach(function(btn) {
+    btn.style.pointerEvents = 'none';
+  });
+
   // Theme handling
   try {
     var saved = localStorage.getItem('theme');

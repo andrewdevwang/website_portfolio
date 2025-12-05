@@ -8,14 +8,17 @@ body {
   font-size: 16px;
   padding-top: 60px;
   opacity: 0;
+  /* Fade in transition speed */
   transition: opacity 1s ease-in;
   overflow: hidden;
 }
 
+/* Fade in transition opacity */
 body.loaded {
   opacity: 1;
 }
 
+/* Scroll-bar appears when content overflows */
 body.loaded.typewriter-done {
   overflow: auto;
 }
@@ -29,12 +32,12 @@ h1, h2, h3, h4 {
 
 h1 { font-size: 3rem; text-align: center; margin-top: 8%; font-weight: 400; margin-bottom: 2%}
 h2 { font-size: 1.6rem; font-weight: 100; text-align: left; line-height: 1.4; margin-left: 8%; margin-right: 8%; opacity: 0.8; min-height: 7rem; }
-
 h3 { font-size: 2rem; text-align: center; margin-top: 6%; font-weight: 400; margin-bottom: 2%; scroll-margin-top: 100px;}
-h4 { font-size: 1.2rem; font-weight: 400; text-align: center}
+h4 { font-size: 1.2rem; font-weight: 400; text-align: center; opacity: 0.8;}
 h5 { font-size: 2rem; text-align: left; margin-top: 6%; font-weight: 400; margin-bottom: 2%; scroll-margin-top: 100px; margin-left: 8%}
 h6 { font-size: 1.6rem; font-weight: 100; text-align: center; line-height: 1.4; margin-left: 8%; margin-right: 8%; opacity: 0.8; min-height: 7rem; }
 
+/* Maintenance link */
 .maintenance-link {
   cursor: pointer;
   transition: opacity 0.3s ease color 0.3s ease;
