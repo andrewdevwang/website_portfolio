@@ -1,3 +1,4 @@
+/* Text styles */
 body {
   margin: 0;
   font-family: "Times New Roman", Times, serif;
@@ -6,12 +7,20 @@ body {
   line-height: 1;
   font-size: 16px;
   padding-top: 60px;
+  opacity: 0;
+  transition: opacity 1s ease-in;
+  overflow: hidden;
 }
 
-p {
-  margin: 0 0 1em;
+body.loaded {
+  opacity: 1;
 }
 
+body.loaded.typewriter-done {
+  overflow: auto;
+}
+
+/* Heading and subheading format */
 h1, h2, h3, h4 {
   margin: 0 0 0.5em;
   font-weight: 700;
@@ -20,10 +29,23 @@ h1, h2, h3, h4 {
 
 h1 { font-size: 3rem; text-align: center; margin-top: 8%; font-weight: 400; margin-bottom: 2%}
 h2 { font-size: 1.6rem; font-weight: 100; text-align: left; line-height: 1.4; margin-left: 8%; margin-right: 8%; opacity: 0.8; min-height: 7rem; }
+
 h3 { font-size: 2rem; text-align: center; margin-top: 6%; font-weight: 400; margin-bottom: 2%; scroll-margin-top: 100px;}
 h4 { font-size: 1.2rem; font-weight: 400; text-align: center}
+h5 { font-size: 2rem; text-align: left; margin-top: 6%; font-weight: 400; margin-bottom: 2%; scroll-margin-top: 100px; margin-left: 8%}
+h6 { font-size: 1.6rem; font-weight: 100; text-align: center; line-height: 1.4; margin-left: 8%; margin-right: 8%; opacity: 0.8; min-height: 7rem; }
 
+.maintenance-link {
+  cursor: pointer;
+  transition: opacity 0.3s ease color 0.3s ease;
+  display: inline;
+}
 
+.maintenance-link:hover {
+  opacity: 0.6;
+}
+
+/* Navbar format*/
 .navbar {
   position: fixed;
   top: 0;
@@ -109,24 +131,37 @@ body.light .navbar {
   height: 1px;
   background: #ecdfcc;
 }
-
-.footer {
-  padding: 16px 4%;
-  margin-top: 40%;
-  color: inherit;
-  background: transparent;
-}
-
-.footer-content {
-  text-align: center;
-  font-size: 0.8rem;
-}
-
 body.light .section-rule {
   background: #202225;
 }
 
+/* Who I Am section layout */
+.who-i-am-container {
+  display: flex;
+  gap: 40px;
+  margin: 0 8%;
+}
 
+.who-i-am-left {
+  flex: 1;
+}
+
+.who-i-am-right {
+  flex: 1;
+}
+
+.fuzhou-img {
+  width: 90%;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .who-i-am-container {
+    flex-direction: column;
+  }
+}
+
+/* Technologies and Skills layout */
 .tech-skill-logos {
   display: flex;
   justify-content: center;
@@ -156,4 +191,26 @@ body.light .section-rule {
 
 body.light .tech-skill-logos img {
   filter: invert(1) 
+}
+
+/* Fade-in animation for main content */
+#main-content {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+
+#main-content.visible {
+  opacity: 1;
+}
+/* Footer layout */
+.footer {
+  padding: 16px 4%;
+  margin-top: 40%;
+  color: inherit;
+  background: transparent;
+}
+
+.footer-content {
+  text-align: center;
+  font-size: 0.8rem;
 }

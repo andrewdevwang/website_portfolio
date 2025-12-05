@@ -13,54 +13,10 @@
         <h2>
           <span id="typewriter"></span><span id="cursor">|</span>
         </h2>
-        <hr class="section-rule">
-        <h3 id="who_i_am">Who I Am</h3>
-<h2>I’m a first-generation American, and growing up, I didn’t have much access to technology or local resources. When I was 11, I discovered computers for the first time, and it felt like a whole new world opened up; I became driven to explore and learn as much as I could. That curiosity led me to study data, programming, and build projects that turned my ideas into something real.</h2>        <hr class="section-rule">
-        <h3 id="explore_my_projects">Explore my Projects</h3>
-<h2>Check out my work</h2>
-        <hr class="section-rule">
-        <h3 id="technology_and_skills">Technologies and Skills</h3>
-    <div class="tech-skill-logos">
-        <div class="tech-item">
-            <img src="image/python_logo.png" alt="Python Logo">
-            <p class="tech-label">Python</p>
-        </div>
-        <div class="tech-item">
-            <img src="image/r_logo.png" alt="R Logo">
-            <p class="tech-label">R</p>
-        </div>
-        <div class="tech-item">
-            <img src="image/sql_logo.png" alt="SQL Logo">
-            <p class="tech-label">SQL</p>
-        </div>
-        <div class="tech-item">
-            <img src="image/java_logo.png" alt="Java Logo">
-            <p class="tech-label">Java</p>
-        </div>
-        <div class="tech-item">
-            <img src="image/cplusplus_logo.png" alt="C++ Logo">
-            <p class="tech-label">C++</p>
-        </div>
-        <div class="tech-item">
-            <img src="image/javascript_logo.png" alt="JavaScript Logo">
-            <p class="tech-label">JavaScript</p>
-        </div>
-        <div class="tech-item">
-            <img src="image/git_logo.png" alt="Git Logo">
-            <p class="tech-label">Git</p>
-        </div>
-    </div>
-    
-        <hr class="section-rule">
-        <h3 id="contact_me">Contact Me</h3>
-        <h4>Let's connect.</h4><h4>Email: andrewdevwang@gmail.com</h4><h4>Phone: (727) 685-9512</h4>
-    </main>
-    <script src="java_script/navbar.js"></script>
-    <div id="footer"></div>
-    <script src="java_script/footer.js"></script>
-    <script>
+        
+        <script>
       (function(){
-        var text = "Hey. I'm an aspiring developer, that's focused on sharpening practical programming and data analysis skills. I enjoy solving problems that require both technical rigor and an understanding of data and people. Explore my virtual workspace.";
+        var text = "Hey. I'm an aspiring developer, that's focused on sharpening practical programming and data analysis skills. I enjoy solving problems that require both technical rigor and an understanding of data and people. Explore my virtual homespace.";
         var i = 0;
         var out = document.getElementById('typewriter');
         var cursor = document.getElementById('cursor');
@@ -71,10 +27,83 @@
             setTimeout(tick, 40);
           } else {
             cursor.style.display = 'none';
+            // Fade in content for the other sections on page
+            document.getElementById('main-content').classList.add('visible');
+            // Enables scrolling after typewriter finishes
+            document.body.classList.add('typewriter-done');
           }
         }
         tick();
       })()
+        </script>
+        
+        <!-- Hidden content that will show after typewriter finishes -->
+        <div id="main-content">
+            <hr class="section-rule">
+            <div class="who-i-am-container">
+                <div class="who-i-am-left">
+                    <h5 id="who_i_am">Who I Am</h5>
+                    <h2>I'm a first-generation American, and growing up, I didn't have much access to technology or local resources. When I was 10, I discovered computers for the first time, and it felt like a whole new world opened up; I became driven to explore and learn as much as I could. That curiosity led me to study data, programming, and build projects that turned my ideas into something real.</h2>
+                </div>
+                <div class="who-i-am-right">
+                    <img src="image/fuzhou.png" alt="fuzhou" class="fuzhou-img">
+                </div>
+            </div>
+            <hr class="section-rule">
+            <h3 id="explore_my_projects">Explore my Projects</h3>
+            <h6>Check out my completed projects. Driven by the desire to learn and create.</h6>
+            <h6><span class="maintenance-link" onclick="showMaintenanceAlert()"> Get Inspired &raquo;</span></h6>
+            <hr class="section-rule">
+            <h3 id="technology_and_skills">Technologies and Skills</h3>
+            <div class="tech-skill-logos">
+                <div class="tech-item">
+                    <img src="image/python_logo.png" alt="Python Logo">
+                    <p class="tech-label">Python</p>
+                </div>
+                <div class="tech-item">
+                    <img src="image/r_logo.png" alt="R Logo">
+                    <p class="tech-label">R</p>
+                </div>
+                <div class="tech-item">
+                    <img src="image/sql_logo.png" alt="SQL Logo">
+                    <p class="tech-label">SQL</p>
+                </div>
+                <div class="tech-item">
+                    <img src="image/java_logo.png" alt="Java Logo">
+                    <p class="tech-label">Java</p>
+                </div>
+                <div class="tech-item">
+                    <img src="image/cplusplus_logo.png" alt="C++ Logo">
+                    <p class="tech-label">C++</p>
+                </div>
+                <div class="tech-item">
+                    <img src="image/javascript_logo.png" alt="JavaScript Logo">
+                    <p class="tech-label">JavaScript</p>
+                </div>
+                <div class="tech-item">
+                    <img src="image/git_logo.png" alt="Git Logo">
+                    <p class="tech-label">Git</p>
+                </div>
+            </div>
+            
+            <hr class="section-rule">
+            <h3 id="contact_me">Contact Me</h3>
+            <h4>Let's connect.</h4><h4>Email: andrewdevwang@gmail.com</h4><h4>Phone: (727) 685-9512</h4>
+        </div>
+    </main>
+    <script src="java_script/navbar.js"></script>
+    <div id="footer"></div>
+    <script src="java_script/footer.js"></script>
+    <script>
+      // Fade in the entire page on load
+      window.addEventListener('load', function() {
+        document.body.classList.add('loaded');
+      });
+      
+      /* Prompts Maintenance ALert */
+      function showMaintenanceAlert() {
+        alert("This section is under maintenance");
+      }
     </script>
 </body>
 </html>

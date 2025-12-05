@@ -6,7 +6,7 @@
       '<nav class="navbar">' +
         '<div class="nav-container">' +
           '<div class="nav-left">' +
-            '<a href="https://andrewdevwang.vercel.app/" class="nav-icon-link" aria-label="Logo">' +
+            '<a href="#" class="nav-icon-link" aria-label="Logo">' +
               '<img class="nav-logo" src="' + base + '/image/aw_logo.png" alt="Logo">' +
             '</a>' +
           '</div>' +
@@ -61,14 +61,21 @@
   }
 
   // Scrolling transition to section
-  var navLinks = document.querySelectorAll('.nav-btn[href^="#"]');
+  var navLinks = document.querySelectorAll('.nav-btn[href^="#"], .nav-icon-link[href="#"]');
   navLinks.forEach(function(link) {
     link.addEventListener('click', function(e) {
       e.preventDefault();
-      var targetId = this.getAttribute('href').substring(1);
-      var target = document.getElementById(targetId);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
+      var href = this.getAttribute('href');
+      if (href === '#') {
+        // Logo link - scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        // Section links - scroll to section
+        var targetId = href.substring(1);
+        var target = document.getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
       }
     });
   });
