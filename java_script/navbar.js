@@ -61,7 +61,7 @@
   }
 
   // Scrolling transition to section
-  var navLinks = document.querySelectorAll('.nav-btn[href^="#"], .nav-icon-link[href="#"]');
+  var navLinks = document.querySelectorAll('.nav-btn[href^="#"], .nav-icon-link[href="#"]:not(#themeToggle)');
   navLinks.forEach(function(link) {
     link.addEventListener('click', function(e) {
       e.preventDefault();
