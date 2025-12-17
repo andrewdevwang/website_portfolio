@@ -141,7 +141,7 @@ body.light .section-rule {
 /* Who I Am section layout */
 .who-i-am-container {
   display: flex;
-  gap: 40px;
+  gap: 0px;
   margin: 0 8%;
 }
 
@@ -150,12 +150,15 @@ body.light .section-rule {
 }
 
 .who-i-am-right {
-  flex: 1;
+  flex: 4;
 }
 
-.fuzhou-img {
-  width: 90%;
-  border-radius: 10px;
+
+.profile-picture {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  margin-left: 20%
 }
 
 @media (max-width: 768px) {
