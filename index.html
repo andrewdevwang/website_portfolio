@@ -11,38 +11,8 @@
     <div id="navbar"></div>
     <main>
         <h1>ANDREW WANG</h1>
-        <h2>
-          <span id="typewriter"></span><span id="cursor">|</span>
-        </h2>
+        <h2>Hey. I'm an aspiring developer, that's focused on sharpening practical programming and data analysis skills. I enjoy solving problems that require both technical rigor and an understanding of data and people. Explore my virtual homespace.</h2>
         
-        <script>
-      (function(){
-        var text = "Hey. I'm an aspiring developer, that's focused on sharpening practical programming and data analysis skills. I enjoy solving problems that require both technical rigor and an understanding of data and people. Explore my virtual homespace.";
-        var i = 0;
-        var out = document.getElementById('typewriter');
-        var cursor = document.getElementById('cursor');
-        if (!out || !cursor) return;
-        function tick(){
-          if (i <= text.length) {
-            out.textContent = text.slice(0, i++);
-            setTimeout(tick, 16);
-          } else {
-            cursor.style.display = 'none';
-            // Fade in content for the other sections on page
-            document.getElementById('main-content').classList.add('visible');
-            // Enables scrolling after typewriter finishes
-            document.body.classList.add('typewriter-done');
-            // Enables navbar buttons after fade in
-            document.querySelectorAll('.nav-btn').forEach(function(btn) {
-              btn.style.pointerEvents = '';
-            });
-          }
-        }
-        tick();
-      })()
-        </script>
-        
-        <!-- Hidden content that will show after typewriter finishes -->
         <div id="main-content">
             <hr class="section-rule">
             <div class="who-i-am-container">
@@ -57,7 +27,16 @@
             <hr class="section-rule">
             <h3 id="explore_my_projects">Explore my Projects</h3>
             <h6>Check out my completed projects. Driven by the desire to learn and create.</h6>
-            <h6><span class="maintenance-link" onclick="showMaintenanceAlert()"> Get Inspired &raquo;</span></h6>
+            <div class="project-box-container">
+                <a class="project-box" href="html/projects.html">
+                    <h5>(R) Airline Tweets Analysis</h5>
+                    <p>Explore public opinion within the airline industry through Twitter tweets.</p>
+                </a>
+                <a class="project-box" href="html/projects.html">
+                    <h5>More Coming Soon</h5>
+                    <p>Work is in progress...</p>
+                </a>
+            </div>
             <hr class="section-rule">
             <h3 id="technology_and_skills">Technologies and Skills</h3>
             <div class="tech-skill-logos">
@@ -99,16 +78,5 @@
     <script src="java_script/navbar.js"></script>
     <div id="footer"></div>
     <script src="java_script/footer.js"></script>
-    <script>
-      // Fade in the entire page on load
-      window.addEventListener('load', function() {
-        document.body.classList.add('loaded');
-      });
-      
-      // Prompts Maintenance ALert
-      function showMaintenanceAlert() {
-        window.open('https://github.com/andrewdevwang?tab=repositories', '_blank');
-      }
-    </script>
 </body>
 </html>

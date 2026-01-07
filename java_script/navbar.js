@@ -41,19 +41,22 @@
   }
   host.innerHTML = markup;
 
-  // Disables navbar buttons at the start until enabled in index.html
-  var navButtons = document.querySelectorAll('.nav-btn');
-  navButtons.forEach(function(btn) {
-    btn.style.pointerEvents = 'none';
-  });
-
-  // Theme handling
+  // Theme handling: default to system preference, override with saved choice
   try {
     var saved = localStorage.getItem('theme');
-    if (saved === 'light') {
-      document.body.classList.add('light');
+    if (saved === 'light' || saved === 'dark') {
+      if (saved === 'light') {
+        document.body.classList.add('light');
+      } else {
+        document.body.classList.remove('light');
+      }
     } else {
-      document.body.classList.remove('light');
+      var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (prefersLight) {
+        document.body.classList.add('light');
+      } else {
+        document.body.classList.remove('light');
+      }
     }
   } catch (e) { /* ignore */ }
 

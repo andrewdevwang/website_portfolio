@@ -7,20 +7,11 @@ body {
   line-height: 1;
   font-size: 16px;
   padding-top: 60px;
-  opacity: 0;
-  /* Fade in transition speed */
-  transition: opacity 1s ease-in;
-  overflow: hidden;
-}
-
-/* Fade in transition opacity */
-body.loaded {
-  opacity: 1;
-}
-
-/* Scroll-bar appears when content overflows */
-body.loaded.typewriter-done {
   overflow: auto;
+}
+
+/* Fade in transition opacity (no longer used for typewriter) */
+body.loaded {
 }
 
 /* Heading and subheading format */
@@ -37,15 +28,53 @@ h4 { font-size: 1.2rem; font-weight: 400; text-align: center; opacity: 0.8;}
 h5 { font-size: 2rem; text-align: left; margin-top: 6%; font-weight: 400; margin-bottom: 2%; scroll-margin-top: 100px; margin-left: 8%}
 h6 { font-size: 1.6rem; font-weight: 100; text-align: center; line-height: 1.4; margin-left: 8%; margin-right: 8%; opacity: 0.8; min-height: 7rem; }
 
-/* Maintenance link */
-.maintenance-link {
-  cursor: pointer;
-  transition: opacity 0.3s ease color 0.3s ease;
-  display: inline;
+/* Project boxes */
+.project-box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 2rem 8% 0 8%;
 }
 
-.maintenance-link:hover {
-  opacity: 0.6;
+.project-box {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: #202225;
+  border: 0.4px solid #202225;
+  border-radius: 12px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.project-box:hover {
+  border-color: #ecdfcc;
+}
+
+.project-box h5,
+.project-box p {
+  margin: 0;
+}
+
+.project-box h5 {
+  font-size: 1.2rem; font-weight: 400; text-align: left; opacity: 0.8;
+  margin-bottom: 8px;
+}
+
+.project-box p {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+/* Light-theme overrides for project boxes */
+body.light .project-box {
+  background-color: #DBCFBE;
+  border-color: #F7EAD6;
+}
+
+body.light .project-box:hover {
+  border-color: #202225;
 }
 
 /* Navbar format*/
@@ -199,15 +228,10 @@ body.light .tech-skill-logos img {
   filter: invert(1) 
 }
 
-/* Fade-in animation for main content */
+/* Main content container */
 #main-content {
-  opacity: 0;
-  transition: opacity 1s ease-in;
 }
 
-#main-content.visible {
-  opacity: 1;
-}
 /* Footer layout */
 .footer {
   padding: 16px 4%;
