@@ -41,6 +41,18 @@
   }
   host.innerHTML = markup;
 
+  // On subpages (in /html/), redirect nav buttons back to homepage sections
+  var isSubpage = path.includes('/html/');
+  if (isSubpage) {
+    var sectionLinks = document.querySelectorAll('.nav-middle .nav-btn[href^="#"]');
+    sectionLinks.forEach(function (link) {
+      var hash = link.getAttribute('href'); // like #who_i_am
+      if (hash && hash.charAt(0) === '#') {
+        link.setAttribute('href', base + '/index.html' + hash);
+      }
+    });
+  }
+
   // Theme handling: default to system preference, override with saved choice
   try {
     var saved = localStorage.getItem('theme');
@@ -69,7 +81,7 @@
     });
   }
 
-  // Scrolling transition to section
+  // Scrolling transition to section (only for same-page anchors)
   var navLinks = document.querySelectorAll('.nav-btn[href^="#"], .nav-icon-link[href="#"]:not(#themeToggle)');
   navLinks.forEach(function(link) {
     link.addEventListener('click', function(e) {
