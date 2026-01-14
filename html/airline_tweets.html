@@ -17,7 +17,50 @@
             <hr class="section-rule">
             <h3>Project Overview</h3>
             <h2>This project analyzes Twitter data from United Airlines, using text mining and unsupervised learning in R. The goal of this is to identify frequently discussed themes, uncover hidden patterns in customer conversations, and map these trends onto a clear visualization. The workflow consists of: data cleaning → exploratory text analysis → topic modeling → visualization.</h2>
-        </div>
+            <hr class="section-rule">
+            <h3> Section 1: Project Setup</h3>
+            <h2> This section initializes the R Markdown document and loads the required librares. Also known as packages, they extend the base R functions in this case these support text mining and visualization.</h2>
+            <div class="code-section">
+<pre><code>```{r setup}
+# add libraries
+library(wordcloud2)
+library(tm)
+```</code></pre>
+            </div>
+            <hr class="section-rule">
+            <h3> Section 2: Data Cleaning and Preprocessing</h3>
+            <h2> This section loads the tweet data into R and performs initial preprocessing to prepare it for analysis. The data is read from a CSV file, and basic cleaning steps are applied to ensure consistency and accuracy in subsequent analysis.</h2>
+            <div class="code-section">
+<pre><code>## Cleaning
+
+```{r, 'cleaning'}
+
+# reads in csv file
+flight <- read.csv('Tweets-1.csv')
+
+# gets rid of unneeded columns
+flight <- flight[,-c(1, 3, 5, 7,8, 9, 10, 12, 13, 14, 15)]
+
+# removes any row that does not contain 'United' within the airline column
+flight <- flight[grepl('United', flight$airline), ] 
+
+# creates a corpus from the text column
+text.corpus <- Corpus(VectorSource(flight$text))
+
+# lower case all characters
+text.corpus <- tm_map(text.corpus, content_transformer(tolower))
+
+# remove stopwords
+text.corpus <- tm_map(text.corpus, removeWords, stopwords("en"))
+
+# remove numbers
+text.corpus <- tm_map(text.corpus, removeNumbers)
+
+# remove punctuation
+text.corpus <- tm_map(text.corpus, removePunctuation)
+```</code></pre>
+            </div>
+
     </main>
     <script src="../java_script/navbar.js"></script>
     <div id="footer"></div>

@@ -244,3 +244,22 @@ body.light .tech-skill-logos img {
   text-align: center;
   font-size: 0.8rem;
 }
+
+/* Boxes and styling for code sections in projects */
+.code-section {
+  background: #202225;
+  border-radius: 12px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-top: 0;
+  margin-bottom: 0;
+  overflow-x: auto;
+}
+
+body.light .code-section {
+  background: #f5f5f5;
+}
