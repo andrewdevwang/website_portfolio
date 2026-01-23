@@ -29,7 +29,7 @@ library(tm)
             </div>
             <hr class="section-rule">
             <h3> Section 2: Data Cleaning and Preprocessing</h3>
-            <h2> This section loads the tweet data into R and performs initial preprocessing to prepare it for analysis. The data is read from a CSV file, and basic cleaning steps are applied to ensure consistency and accuracy in subsequent analysis.</h2>
+            <h2> This section loads the tweet data into R and performs initial preprocessing to prepare it for analysis. The data is read from a CSV file, and basic cleaning steps are applied to ensure consistency and accuracy in later analysis.</h2>
             <div class="code-section">
 <pre><code>## Cleaning
 
@@ -60,6 +60,133 @@ text.corpus <- tm_map(text.corpus, removeNumbers)
 text.corpus <- tm_map(text.corpus, removePunctuation)
 ```</code></pre>
             </div>
+            <hr class="section-rule">
+            <h3> Section 3: Exploratory Analysis Using Word Frequency and Word Cloud</h3>
+            <h2> In order to explore the dominant vocabulary used in United Arilines tweets, the texts are first converted into a Document-Term Matrix (DTM) in order for each row to represent a tweet, each column to represent a unique word, and a cell represent the frequency within a tweet. This allows us to use world cloud to find the 50 most frequeny words in the tweets. </h2>
+            <div class="code-section">
+<pre><code>## Analysis 1
+
+```{r, 'step 1'}
+# load packages
+library(tm)
+library(wordcloud)
+library(wordcloud2)
+library(stopwords)
+
+# load the data
+TweetData <- read.csv("Tweets-1.csv")
+str(TweetData)
+TweetData <- TweetData$text
+# check data
+str(TweetData)
+head(TweetData)
+
+# clean data so that only united remains
+TweetData <- TweetData[grep("@united", TweetData)]
+TweetData <- TweetData[-c(1:2)]
+head(TweetData)
+
+# character vector source for corpus
+TweetData.vec <- VectorSource(TweetData)
+TweetData.corpus <- Corpus(TweetData.vec)
+TweetData.corpus
+
+# lowercase values
+TweetData.corpus <- tm_map(TweetData.corpus, content_transformer(tolower))
+#removes numerical values
+TweetData.corpus <- tm_map(TweetData.corpus, removeNumbers)
+#removes punctuation
+TweetData.corpus <- tm_map(TweetData.corpus, removePunctuation)
+#removes stop words
+TweetData.corpus <- tm_map(TweetData.corpus, removeWords, stopwords("english"))
+#removes specific words
+TweetData.corpus <- tm_map(TweetData.corpus, removeWords, c("@united", "can", "just", "flight"))
+head(TweetData)
+
+# create document term matrix
+TermDoc <- DocumentTermMatrix(TweetData.corpus)
+TermDoc
+inspect(TermDoc)
+
+# dtm to rm
+RegularMaxtrix <- as.matrix(TermDoc)
+textCount <- rowSums(RegularMaxtrix)
+textCount <- sort(textCount, decreasing = TRUE)
+head(textCount)
+
+# extracts terms from dtm
+Terms <- Terms(TermDoc)
+# select top terms
+TopTerms <- Terms[as.numeric(names(textCount))]
+# rename as the top terms
+names(textCount) <- TopTerms
+
+# setting the seed for fixed results
+set.seed(123)
+
+# dataframe of words corresponding to frequencies
+cloudFrame <- data.frame(word = names(textCount), freq = textCount)
+head(cloudFrame)
+
+# using wordcloud
+wordcloud(cloudFrame$word, cloudFrame$freq, max.words = 50)
+
+# adjust the plot area
+par(mar = c(0, 0, 0, 0))
+# using wordcloud with customization
+wordcloud(names(textCount), textCount, colors = brewer.pal(5, "Dark2"), max.words = 50)
+
+# dataframe for word frequencies
+wordFreq<- data.frame(word = names(textCount), freq = textCount)
+# using wordcloud2
+wordcloud2(wordFreq, color = brewer.pal(5, "Dark2"), backgroundColor = "white", size = 0.5, fontFamily = "sans-serif")</code></pre>
+            </div>
+
+```</code></pre>
+            </div>
+            <hr class="section-rule">
+            <h3> Section 4: Topic Modeling with LDA</h3>
+            <h2> In order to uncover latent themes beyond just simple word frequency, Latent Dirichlet Allocation (LDA) is applied to the corpus. </h2>
+            <div class="code-section">
+<pre><code>## Analysis 2
+
+```{r, 'step 2'}
+# Analysis 2
+
+# Load the necessary library
+library(topicmodels)
+library(LDAvis)
+library(servr)
+
+# We already have our DTM from the previous steps
+dtm <- DocumentTermMatrix(text.corpus)
+
+# Fit the LDA model
+lda_model <- LDA(dtm, k = 5, control = list(seed = 1234))
+
+# Get the terms per topic
+terms(lda_model, 5)
+
+# Get the topics per document
+topics(lda_model)
+
+# Check the distribution of topics in each document
+posterior(lda_model)$topics
+
+# Convert dtm to a matrix
+dtm <- as.matrix(dtm)
+
+# Create the JSON object to feed the visualization
+json <- createJSON(phi = posterior(lda_model)$terms,
+                   theta = posterior(lda_model)$topics,
+                   doc.length = rowSums(dtm),
+                   vocab = colnames(dtm),
+                   term.frequency = colSums(dtm))
+
+# Visualize
+serVis(json)```</code></pre>
+            </div>
+
 
     </main>
     <script src="../java_script/navbar.js"></script>
