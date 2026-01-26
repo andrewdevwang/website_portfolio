@@ -11,7 +11,7 @@
     <div id="navbar"></div>
     <main>
         <h1>(R) Airline Tweets</h1>
-        <h6>★ Processed 14,000+ tweets and transformed these tweets using topic modeling into an intuitive world cloud.</h6>
+        <h6>★ Analyzed 14,000+ airline tweets in R using text preprocessing, word frequency analysis, and LDA topic modeling to uncover customer sentiment themes.</h6>
 
         <div id="main-content">
             <hr class="section-rule">
@@ -19,7 +19,7 @@
             <h2>This project analyzes Twitter data from United Airlines, using text mining and unsupervised learning in R. The goal of this is to identify frequently discussed themes, uncover hidden patterns in customer conversations, and map these trends onto a clear visualization. The workflow consists of: data cleaning → exploratory text analysis → topic modeling → visualization.</h2>
             <hr class="section-rule">
             <h3> Section 1: Project Setup</h3>
-            <h2> This section initializes the R Markdown document and loads the required librares. Also known as packages, they extend the base R functions in this case these support text mining and visualization.</h2>
+            <h2> This section initializes the R Markdown environment and loads the required librares. These packages extend the base R functions and provide tools that support text mining and visualization that will be used throughout the project.</h2>
             <div class="code-section">
 <pre><code>```{r setup}
 # add libraries
@@ -29,7 +29,7 @@ library(tm)
             </div>
             <hr class="section-rule">
             <h3> Section 2: Data Cleaning and Preprocessing</h3>
-            <h2> This section loads the tweet data into R and performs initial preprocessing to prepare it for analysis. The data is read from a CSV file, and basic cleaning steps are applied to ensure consistency and accuracy in later analysis.</h2>
+            <h2> This section loads the tweet data into R and performs initial preprocessing to prepare it for analysis. The data is read from a CSV file, and standard cleaning steps are applied to ensure consistency and accuracy for frequency analysis and topic modeling.</h2>
             <div class="code-section">
 <pre><code>## Cleaning
 
@@ -58,11 +58,11 @@ text.corpus <- tm_map(text.corpus, removeNumbers)
 
 # remove punctuation
 text.corpus <- tm_map(text.corpus, removePunctuation)
-```</code></pre>
+</code></pre>
             </div>
             <hr class="section-rule">
             <h3> Section 3: Exploratory Analysis Using Word Frequency and Word Cloud</h3>
-            <h2> In order to explore the dominant vocabulary used in United Arilines tweets, the texts are first converted into a Document-Term Matrix (DTM) in order for each row to represent a tweet, each column to represent a unique word, and a cell represent the frequency within a tweet. This allows us to use world cloud to find the 50 most frequeny words in the tweets. </h2>
+            <h2> To explore common themes in United Airlines tweets, the text was converted into a Document-Term Matrix (DTM), where each row represents a tweet, each column represents a unique word, and each cell contains the word frequency within that tweet. Using this structure, word frequencies were added together across all tweets and visualized using a word cloud highlighting the top 50 most frequent terms. </h2>
             <div class="code-section">
 <pre><code>## Analysis 1
 
@@ -142,11 +142,11 @@ wordFreq<- data.frame(word = names(textCount), freq = textCount)
 wordcloud2(wordFreq, color = brewer.pal(5, "Dark2"), backgroundColor = "white", size = 0.5, fontFamily = "sans-serif")</code></pre>
             </div>
 
-```</code></pre>
+</code></pre>
             </div>
             <hr class="section-rule">
-            <h3> Section 4: Topic Modeling with LDA</h3>
-            <h2> In order to uncover latent themes beyond just simple word frequency, Latent Dirichlet Allocation (LDA) is applied to the corpus. </h2>
+            <h3> Section 4: Topic Modeling (LDA) & LDAvis Visualization</h3>
+            <h2> Beyond word frequency analysis, Latent Dirichlet Allocation (LDA) was applied to uncover latent themes in United Airlines tweets. LDA is an unsupervised topic modeling algorithm that groups words into topics based on patterns of co-occurrence across documents. In this analysis, the model was trained with k = 5 topics to capture distinct themes within the dataset. Additionally, these LDA results were visualized using LDAvis, which allows you to explore the topic-term relationships.</h2>
             <div class="code-section">
 <pre><code>## Analysis 2
 
@@ -186,6 +186,55 @@ json <- createJSON(phi = posterior(lda_model)$terms,
 # Visualize
 serVis(json)```</code></pre>
             </div>
+
+</code></pre>
+            </div>
+            <hr class="section-rule">
+            <h3> Section 5: Sentiment & Frequency Analysis</h3>
+            <h2> To complement the NLP analysis, tweet sentiment is summarized using a bar chart created with ggplot2. This visualization highlights the distribution of positive, negative, and neutral sentiment in United Airlines tweets. Additionally, a word frequency chart displays the top 20 most common terms to reinforce key themes found in the text.</h2>
+            <div class="code-section">
+<pre><code>## Visualization
+
+```{r, 'visualization'}
+
+# Load library
+library(ggplot2)
+
+# Count the number of tweets for each sentiment
+sentiment_counts <- table(flight$airline_sentiment)
+
+# Convert the sentiment counts to a data frame
+sentiment_df <- data.frame(sentiment = names(sentiment_counts),
+                           count = as.numeric(sentiment_counts))
+
+# Create the ggplot bar plot
+ggplot(sentiment_df, aes(x = sentiment, y = count, fill = sentiment)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Sentiment Distribution for United Airlines Tweets",
+       x = "Sentiment",
+       y = "Number of Tweets") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("positive" = "green", "negative" = "red", "neutral" = "blue"))
+
+
+
+# Create a ggplot word frequency plot 
+ggplot(head(cloudFrame, 20), aes(x = reorder(word, freq), y = freq, fill = ifelse(seq_along(word) %% 2 == 0, "skyblue", "darkblue"))) +
+  geom_col(color = "black") +
+  coord_flip() +
+  labs(title = "Top 20 Most Common Words in United Airlines Tweets",
+       x = "Word",
+       y = "Frequency") +
+  scale_fill_identity() +
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 8)) +
+  geom_text(aes(label = freq), vjust = -0.2, hjust = -0.4, size = 3) # Add frequency labels on top of bars
+```</code></pre>
+            </div>
+
+
+
 
 
     </main>

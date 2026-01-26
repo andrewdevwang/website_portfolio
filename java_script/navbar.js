@@ -41,15 +41,18 @@
   }
   host.innerHTML = markup;
 
-  // On subpages (in /html/), redirect nav buttons back to homepage sections
+  // On subpages (in /html/), send nav buttons to sections on the homepage
   var isSubpage = path.includes('/html/');
   if (isSubpage) {
     var sectionLinks = document.querySelectorAll('.nav-middle .nav-btn[href^="#"]');
     sectionLinks.forEach(function (link) {
-      var hash = link.getAttribute('href'); // like #who_i_am
-      if (hash && hash.charAt(0) === '#') {
-        link.setAttribute('href', base + '/index.html' + hash);
-      }
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var hash = this.getAttribute('href'); // like #who_i_am
+        if (hash && hash.charAt(0) === '#') {
+          window.location.href = base + '/index.html' + hash;
+        }
+      });
     });
   }
 
