@@ -14,7 +14,7 @@ body {
 body.loaded {
 }
 
-/* Heading and subheading format */
+/* Heading and subheading and paragraph format */
 h1, h2, h3, h4 {
   margin: 0 0 0.5em;
   font-weight: 700;
@@ -27,6 +27,8 @@ h3 { font-size: 2rem; text-align: center; margin-top: 6%; font-weight: 400; marg
 h4 { font-size: 1.2rem; font-weight: 400; text-align: center; opacity: 0.8;}
 h5 { font-size: 2rem; text-align: left; margin-top: 6%; font-weight: 400; margin-bottom: 2%; scroll-margin-top: 100px; margin-left: 8%}
 h6 { font-size: 1.6rem; font-weight: 100; text-align: center; line-height: 1.4; margin-left: 8%; margin-right: 8%; opacity: 0.8; min-height: 7rem; }
+p { font-size: 1.6rem; font-weight: 100; text-align: left; line-height: 1.4; margin-left: 8%; margin-right: 8%; opacity: 0.8; min-height: 4rem;}
+p2{ font-size: 0.8; font-weight: 100; text-align: center}
 
 /* Project boxes */
 .project-box-container {
@@ -235,7 +237,7 @@ body.light .tech-skill-logos img {
 /* Footer layout */
 .footer {
   padding: 16px 4%;
-  margin-top: 40%;
+  margin-top: 42.5rem;
   color: inherit;
   background: transparent;
 }
