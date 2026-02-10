@@ -28,7 +28,7 @@ h4 { font-size: 1.2rem; font-weight: 400; text-align: center; opacity: 0.8;}
 h5 { font-size: 2rem; text-align: left; margin-top: 6%; font-weight: 400; margin-bottom: 2%; scroll-margin-top: 100px; margin-left: 8%}
 h6 { font-size: 1.6rem; font-weight: 100; text-align: center; line-height: 1.4; margin-left: 8%; margin-right: 8%; opacity: 0.8; min-height: 7rem; }
 p { font-size: 1.6rem; font-weight: 100; text-align: left; line-height: 1.4; margin-left: 8%; margin-right: 8%; opacity: 0.8; min-height: 4rem;}
-p2{ font-size: 0.8; font-weight: 100; text-align: center}
+p2{ font-size: 0.05rem; font-weight: 100; text-align: center}
 
 /* Project boxes */
 .project-box-container {
