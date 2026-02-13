@@ -21,11 +21,11 @@
             <h3> Section 1: Project Setup</h3>
             <p> This section initializes the R Markdown environment and loads the required librares. These packages extend the base R functions and provide tools that support text mining and visualization that will be used throughout the project.</p>
             <div class="code-section">
-<pre><code> ## Setup
+<pre><code># Setup
 
 ```{r 'setup'}
 
-# load packages
+## load packages
 library(tm)
 library(wordcloud)
 library(wordcloud2)
@@ -39,42 +39,42 @@ library(servr)
             <h3> Section 2: Data Cleaning and Preprocessing</h3>
             <p> This section loads the tweet data into R and performs initial preprocessing to prepare it for analysis. The data is read from a CSV file, and standard cleaning steps are applied to ensure consistency and accuracy for frequency analysis and topic modeling.</p>
             <div class="code-section">
-<pre><code>## Cleaning
+<pre><code># Cleaning
 
 ```{r, 'cleaning'}
 
-# Load the data
+## Load the data
 TweetData <- read.csv("Tweets-1.csv")
 str(TweetData)
 TweetData <- TweetData$text
 
-# Check data
+## Check data
 str(TweetData)
 head(TweetData)
 
-# Clean data so that only united remains
+## Clean data so that only united remains
 TweetData <- TweetData[grep("@united", TweetData)]
 TweetData <- TweetData[-c(1:2)]
 head(TweetData)
 
-# Character vector source for corpus
+## Character vector source for corpus
 TweetData.vec <- VectorSource(TweetData)
 TweetData.corpus <- Corpus(TweetData.vec)
 TweetData.corpus
 
-# Lowercase values
+## Lowercase values
 TweetData.corpus <- tm_map(TweetData.corpus, content_transformer(tolower))
 
-# Removes numerical values
+## Removes numerical values
 TweetData.corpus <- tm_map(TweetData.corpus, removeNumbers)
 
-# Removes punctuation
+## Removes punctuation
 TweetData.corpus <- tm_map(TweetData.corpus, removePunctuation)
 
-# Removes stop words
+## Removes stop words
 TweetData.corpus <- tm_map(TweetData.corpus, removeWords, stopwords("english"))
 
-# Removes specific words
+## Removes specific words
 TweetData.corpus <- tm_map(TweetData.corpus, removeWords, c("@united", "can", "just", "flight"))
 
 </code></pre>
@@ -83,46 +83,46 @@ TweetData.corpus <- tm_map(TweetData.corpus, removeWords, c("@united", "can", "j
             <h3> Section 3: Exploratory Analysis Using Word Frequency and Word Cloud</h3>
             <p> To explore common themes in United Airlines tweets, the text was converted into a Document-Term Matrix (DTM), where each row represents a tweet, each column represents a unique word, and each cell contains the word frequency within that tweet. Using this structure, word frequencies were added together across all tweets and visualized using a word cloud highlighting the top 50 most frequent terms. </p>
             <div class="code-section">
-<pre><code>## Analysis 1
+<pre><code># Analysis 1
 
 ```{r, 'step 1'}
 
-# Create document term matrix
+## Create document term matrix
 TermDoc <- DocumentTermMatrix(TweetData.corpus)
 TermDoc
 inspect(TermDoc)
 
-# DTM to RM
+## DTM to RM
 RegularMaxtrix <- as.matrix(TermDoc)
 textCount <- rowSums(RegularMaxtrix)
 textCount <- sort(textCount, decreasing = TRUE)
 head(textCount)
 
-# Extract terms from dtm
+## Extract terms from dtm
 Terms <- Terms(TermDoc)
-# Select top terms
+## Select top terms
 TopTerms <- Terms[as.numeric(names(textCount))]
-# Rename as the top terms
+## Rename as the top terms
 names(textCount) <- TopTerms
 
-# Set the seed for fixed results
+## Set the seed for fixed results
 set.seed(123)
 
-# Dataframe of words corresponding to frequencies
+## Dataframe of words corresponding to frequencies
 cloudFrame <- data.frame(word = names(textCount), freq = textCount)
 head(cloudFrame)
 
-# Using wordcloud
+## Using wordcloud
 wordcloud(cloudFrame$word, cloudFrame$freq, max.words = 50)
 
-# Adjust the plot area
+## Adjust the plot area
 par(mar = c(0, 0, 0, 0))
-# Using wordcloud with customization
+## Using wordcloud with customization
 wordcloud(names(textCount), textCount, colors = brewer.pal(5, "Dark2"), max.words = 50)
 
-# Dataframe for word frequencies
+## Dataframe for word frequencies
 wordFreq<- data.frame(word = names(textCount), freq = textCount)
-# Using wordcloud2
+## Using wordcloud2
 wordcloud2(wordFreq, color = brewer.pal(5, "Dark2"), backgroundColor = "white", size = 0.5, fontFamily = "sans-serif")
 
 ```</code></pre>
@@ -131,36 +131,36 @@ wordcloud2(wordFreq, color = brewer.pal(5, "Dark2"), backgroundColor = "white", 
             <h3> Section 4: Topic Modeling (LDA) & LDAvis Visualization</h3>
             <p> Beyond word frequency analysis, Latent Dirichlet Allocation (LDA) was applied to uncover latent themes in United Airlines tweets. LDA is an unsupervised topic modeling algorithm that groups words into topics based on patterns of co-occurrence across documents. In this analysis, the model was trained with k = 5 topics to capture distinct themes within the dataset. Additionally, these LDA results were visualized using LDAvis, which allows you to explore the topic-term relationships.</p>
             <div class="code-section">
-<pre><code>## Analysis 2
+<pre><code># Analysis 2
 
 ```{r, 'step 2'}
 
-# We already have our DTM from the previous steps
+## We already have our DTM from the previous steps
 dtm <- DocumentTermMatrix(text.corpus)
 
-# Fit the LDA model
+## Fit the LDA model
 lda_model <- LDA(dtm, k = 5, control = list(seed = 1234))
 
-# Get the terms per topic
+## Get the terms per topic
 terms(lda_model, 5)
 
-# Get the topics per document
+## Get the topics per document
 topics(lda_model)
 
-# Check the distribution of topics in each document
+## Check the distribution of topics in each document
 posterior(lda_model)$topics
 
-# Convert dtm to a matrix
+## Convert dtm to a matrix
 dtm <- as.matrix(dtm)
 
-# Create the JSON object to feed the visualization
+## Create the JSON object to feed the visualization
 json <- createJSON(phi = posterior(lda_model)$terms,
                    theta = posterior(lda_model)$topics,
                    doc.length = rowSums(dtm),
                    vocab = colnames(dtm),
                    term.frequency = colSums(dtm))
 
-# Visualize
+## Visualize
 serVis(json)
 
 ```</code></pre>
@@ -169,21 +169,21 @@ serVis(json)
             <h3> Section 5: Sentiment & Frequency Analysis</h3>
             <p> To complement the NLP analysis, tweet sentiment is summarized using a bar chart created with ggplot2. This visualization highlights the distribution of positive, negative, and neutral sentiment in United Airlines tweets. Additionally, a word frequency chart displays the top 20 most common terms to reinforce key themes found in the text.</p>
             <div class="code-section">
-<pre><code>## Visualization
+<pre><code># Visualization
 
 ```{r, 'visualization'}
 
-# Load library
+## Load library
 library(ggplot2)
 
-# Count the number of tweets for each sentiment
+## Count the number of tweets for each sentiment
 sentiment_counts <- table(flight$airline_sentiment)
 
-# Convert the sentiment counts to a data frame
+## Convert the sentiment counts to a data frame
 sentiment_df <- data.frame(sentiment = names(sentiment_counts),
                            count = as.numeric(sentiment_counts))
 
-# Create the ggplot bar plot
+## Create the ggplot bar plot
 ggplot(sentiment_df, aes(x = sentiment, y = count, fill = sentiment)) +
   geom_bar(stat = "identity") +
   labs(title = "Sentiment Distribution for United Airlines Tweets",
@@ -193,7 +193,7 @@ ggplot(sentiment_df, aes(x = sentiment, y = count, fill = sentiment)) +
   theme(legend.position = "none") +
   scale_fill_manual(values = c("positive" = "green", "negative" = "red", "neutral" = "blue"))
 
-# Create a ggplot word frequency plot 
+## Create a ggplot word frequency plot 
 ggplot(head(cloudFrame, 20), aes(x = reorder(word, freq), y = freq, fill = ifelse(seq_along(word) %% 2 == 0, "skyblue", "darkblue"))) +
   geom_col(color = "black") +
   coord_flip() +

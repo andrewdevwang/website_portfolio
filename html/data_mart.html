@@ -18,21 +18,53 @@
             <p>This project analyzes over 550,000 Walmart transactions to understand customer purchasing behavior and build predictive models for purchase amount. After preparing and exploring the data, two modeling approaches were implemented: a linear regression model and a random forest model. Model performance was evaluated using cross-validation and a held-out validation set, with metrics including R², RMSE, and MAE.</p>
             <hr class="section-rule">
             <h3> Section 1: Project Setup</h3>
-            <p></p>
+            <p>This section initializes the R Markdown environment and loads the required librares. These packages extend the base R functions and provide tools that support data manipulation, vizualization, modeling, and parrallel computation.</p>
             <div class="code-section">
 <pre>```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-#Load in Libraries
+## Load in Libraries
 ```{r}
-library(tidyverse)r
+library(tidyverse)
 library(caret)
 library(ggthemes)
 library(leaps)
 library(doParallel)
 ```</code></pre>
             </div>
+            <hr class="section-rule">
+            <h3> Section 2: Data Cleaning and Preprocessing </h3>
+            <p>This section loads the tweet data into R and performs initial preprocessing to prepare it for analysis. The data is read from a CSV file, examined, checked for missing data, and converted into factors needed for later analysis.</p>
+            <div class="code-section">
+<pre>## Load in Walmart Data
+```{r}
+Walmart <- read_csv("Data\\walmart.csv")
+```
+
+## Examine Walmart Data
+```{r}
+glimpse(Walmart)
+summary(Walmart)
+```
+
+## Check for Missing Data
+```{r}
+colSums(is.na(Walmart))
+```
+
+## Convert DataTypes to Factors
+```{r}
+Walmart <- Walmart |> 
+  mutate(Gender = as.factor(Gender),
+         Age = as.factor(Age),
+         Occupation = as.factor(Occupation),
+         City_Category = as.factor(City_Category),
+         Stay_In_Current_City_Years = as.factor(Stay_In_Current_City_Years),
+         Marital_Status = as.factor(Marital_Status),
+         Product_Category = as.factor(Product_Category)) |> 
+  select(Purchase,Age,Gender,City_Category,Stay_In_Current_City_Years,Occupation,Marital_Status,Product_Category)
+```</code></pre>
+
         </div> <!-- end of main-content -->
     </main>
     <script src="../java_script/navbar.js"></script>
