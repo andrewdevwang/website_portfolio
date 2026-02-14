@@ -18,7 +18,8 @@
             <p>This project analyzes over 550,000 Walmart transactions to understand customer purchasing behavior and build predictive models for purchase amount. After preparing and exploring the data, two modeling approaches were implemented: a linear regression model and a random forest model. Model performance was evaluated using cross-validation and a held-out validation set, with metrics including R², RMSE, and MAE.</p>
             <hr class="section-rule">
             <h3> Section 1: Project Setup</h3>
-            <p>This section initializes the R Markdown environment and loads the required librares. These packages extend the base R functions and provide tools that support data manipulation, vizualization, modeling, and parrallel computation.</p>
+            <p> This section initializes the R Markdown environment and loads the required librares.
+                These packages extend the base R functions and provide tools that support data manipulation, vizualization, modeling, and parrallel computation.</p>
             <div class="code-section">
 <pre>```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -34,7 +35,8 @@ library(doParallel)
             </div>
             <hr class="section-rule">
             <h3> Section 2: Data Cleaning and Preprocessing </h3>
-            <p>This section loads the tweet data into R and performs initial preprocessing to prepare it for analysis. The data is read from a CSV file, examined, checked for missing data, and converted into factors needed for later analysis.</p>
+                <p>This section loads the tweet data into R and performs initial preprocessing to prepare it for analysis. 
+                The data is read from a CSV file, examined, checked for missing data, and converted into factors needed for later analysis.</p>
             <div class="code-section">
 <pre>## Load in Walmart Data
 ```{r}

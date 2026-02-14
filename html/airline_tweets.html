@@ -16,10 +16,13 @@
         <div id="main-content">
             <hr class="section-rule">
             <h3>Project Overview</h3>
-            <p>This project analyzes Twitter data from United Airlines, using text mining and unsupervised learning in R. The goal of this is to identify frequently discussed themes, uncover hidden patterns in customer conversations, and map these trends onto a clear visualization. The workflow consists of: data cleaning → exploratory text analysis → topic modeling → visualization.</p>
+            <p>This project analyzes Twitter data from United Airlines, using text mining and unsupervised learning in R. 
+              The goal of this is to identify frequently discussed themes, uncover hidden patterns in customer conversations, and map these trends onto a clear visualization. 
+              The workflow consists of: data cleaning → exploratory text analysis → topic modeling → visualization.</p>
             <hr class="section-rule">
             <h3> Section 1: Project Setup</h3>
-            <p> This section initializes the R Markdown environment and loads the required librares. These packages extend the base R functions and provide tools that support text mining and visualization that will be used throughout the project.</p>
+            <p> This section initializes the R Markdown environment and loads the required librares. 
+                These packages extend the base R functions and provide tools that support text mining and visualization that will be used throughout the project.</p>
             <div class="code-section">
 <pre><code># Setup
 
@@ -37,7 +40,8 @@ library(servr)
             </div>
             <hr class="section-rule">
             <h3> Section 2: Data Cleaning and Preprocessing</h3>
-            <p> This section loads the tweet data into R and performs initial preprocessing to prepare it for analysis. The data is read from a CSV file, and standard cleaning steps are applied to ensure consistency and accuracy for frequency analysis and topic modeling.</p>
+            <p> This section loads the tweet data into R and performs initial preprocessing to prepare it for analysis. 
+                The data is read from a CSV file, and standard cleaning steps are applied to ensure consistency and accuracy for frequency analysis and topic modeling.</p>
             <div class="code-section">
 <pre><code># Cleaning
 
@@ -81,7 +85,8 @@ TweetData.corpus <- tm_map(TweetData.corpus, removeWords, c("@united", "can", "j
             </div>
             <hr class="section-rule">
             <h3> Section 3: Exploratory Analysis Using Word Frequency and Word Cloud</h3>
-            <p> To explore common themes in United Airlines tweets, the text was converted into a Document-Term Matrix (DTM), where each row represents a tweet, each column represents a unique word, and each cell contains the word frequency within that tweet. Using this structure, word frequencies were added together across all tweets and visualized using a word cloud highlighting the top 50 most frequent terms. </p>
+            <p> To explore common themes in United Airlines tweets, the text was converted into a Document-Term Matrix (DTM), where each row represents a tweet, each column represents a unique word, and each cell contains the word frequency within that tweet.
+            Using this structure, word frequencies were added together across all tweets and visualized using a word cloud highlighting the top 50 most frequent terms. </p>
             <div class="code-section">
 <pre><code># Analysis 1
 
@@ -129,7 +134,9 @@ wordcloud2(wordFreq, color = brewer.pal(5, "Dark2"), backgroundColor = "white", 
             </div>
             <hr class="section-rule">
             <h3> Section 4: Topic Modeling (LDA) & LDAvis Visualization</h3>
-            <p> Beyond word frequency analysis, Latent Dirichlet Allocation (LDA) was applied to uncover latent themes in United Airlines tweets. LDA is an unsupervised topic modeling algorithm that groups words into topics based on patterns of co-occurrence across documents. In this analysis, the model was trained with k = 5 topics to capture distinct themes within the dataset. Additionally, these LDA results were visualized using LDAvis, which allows you to explore the topic-term relationships.</p>
+            <p> Beyond word frequency analysis, Latent Dirichlet Allocation (LDA) was applied to uncover latent themes in United Airlines tweets. 
+                LDA is an unsupervised topic modeling algorithm that groups words into topics based on patterns of co-occurrence across documents. 
+                In this analysis, the model was trained with k = 5 topics to capture distinct themes within the dataset. Additionally, these LDA results were visualized using LDAvis, which allows you to explore the topic-term relationships.</p>
             <div class="code-section">
 <pre><code># Analysis 2
 
@@ -167,7 +174,9 @@ serVis(json)
             </div>
             <hr class="section-rule">
             <h3> Section 5: Sentiment & Frequency Analysis</h3>
-            <p> To complement the NLP analysis, tweet sentiment is summarized using a bar chart created with ggplot2. This visualization highlights the distribution of positive, negative, and neutral sentiment in United Airlines tweets. Additionally, a word frequency chart displays the top 20 most common terms to reinforce key themes found in the text.</p>
+            <p> To complement the NLP analysis, tweet sentiment is summarized using a bar chart created with ggplot2. 
+                This visualization highlights the distribution of positive, negative, and neutral sentiment in United Airlines tweets. 
+                Additionally, a word frequency chart displays the top 20 most common terms to reinforce key themes found in the text.</p>
             <div class="code-section">
 <pre><code># Visualization
 
@@ -209,7 +218,8 @@ ggplot(head(cloudFrame, 20), aes(x = reorder(word, freq), y = freq, fill = ifels
             </div>
             <hr class="section-rule">
             <h3>Conclusion</h3>
-            <p>After analyzing 14,000+ airline Tweets, 3,822 corresponded to United Airlines. These tweets primarily expressed negative sentiment about baggage handling, airport processes, and disruption issues. This highlights how customers will frequently rely on social media to discuss operations, making it clear way for businesses to improve business operations and customer experience.</p>
+            <p>After analyzing 14,000+ airline Tweets, 3,822 corresponded to United Airlines. These tweets primarily expressed negative sentiment about baggage handling, airport processes, and disruption issues. 
+                This highlights how customers will frequently rely on social media to discuss operations, making it clear way for businesses to improve business operations and customer experience.</p>
         </div> <!-- end of main-content -->
     </main>
     <script src="../java_script/navbar.js"></script>
