@@ -10,8 +10,9 @@ body {
   overflow: auto;
 }
 
-/* Fade in transition opacity (no longer used for typewriter) */
-body.loaded {
+/* Fade in transition opacity (no longer used) */
+body.loaded { 
+  opacity: 1;
 }
 
 /* Heading and subheading and paragraph format */
@@ -235,6 +236,7 @@ body.light .tech-skill-logos img {
 
 /* Main content container */
 #main-content {
+  margin-top: 4%;
 }
 
 /* Footer layout */
