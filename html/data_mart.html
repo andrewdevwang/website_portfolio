@@ -70,15 +70,56 @@ Walmart <- Walmart |>
             </div>
             <hr class="section-rule">
             <h3> Section 3: Exploratory Data Analysis (EDA)</h3>
-                <p>The purpose of this analysis is to understand how puchaseing behavior varies across customer demographics and product categories before building predictive models.</p>
+                <p>The purpose of exploratory data analysis is to understand how purchasing behavior varies across customer demographics and product categories before building predictive models. Visual 1 explores total purchase by product category and gender, while visual 2 explores total purchases by age group and gender.</p>
             <div class="code-section">
-<pre></code></pre>
+<pre>## Exploratory Visual 1 - Distribution of Purchase Amounts
+```{r}
+## Aggregate Totals by Product Category and Gender
+walmart_purchase_category_gender <- Walmart |> 
+  group_by(Product_Category,Gender) |> 
+  summarize(Total_Purchase = sum(Purchase,na.rm=TRUE)) |> 
+  arrange(desc(Total_Purchase))
+
+## Generate Visualization
+walmart_purchase_category_gender |> 
+  ggplot(aes(x=Product_Category,y=Total_Purchase))+
+  geom_col(aes(fill=Gender))+
+  theme_minimal()+
+  scale_fill_brewer(palette="Dark2")+
+  labs(title = "Total Purchase by Product Category and Gender",
+       x = "Product Category",
+       y = "Total Purchase Amount")
+```
+## Exploratory Visual 2 - Purchase Amounts by Age Group and Gender
+```{r}
+walmart_purchase_age_groups <- Walmart |> 
+  group_by(Age,Gender) |> 
+  summarize(Total_purchase = sum(Purchase))
+## Generate Visualization
+walmart_purchase_age_groups |> 
+  ggplot(aes(Age, Total_purchase))+
+  geom_col(aes(fill=Gender))+
+  scale_fill_brewer(palette="Dark2")+
+  theme_minimal()+
+  labs(title="Total Purchase Amount by Age Group and Gender",
+       x= "Age Group",
+       y= "Total Purchase Amount")
+```</code></pre>
             </div>
             <hr class="section-rule">
             <h3> Section 4: Feature Selection</h3>
-                <p></p>
+                <p>Using the leaps package we identify the predictor combination that maximizes the adjused R-squared value. This ensures model accuracy and simplicity while reducing overfitting.</p>
             <div class="code-section">
-<pre></code></pre>
+<pre>## Use Leaps Package to Determine Optimal Predictors for Linear Regression
+
+```{r}
+best_subsets <- regsubsets(Purchase~.,data=Walmart,method="exhaustive",really.big=T)
+lm_summary <- summary(best_subsets)
+lm_index <- which.max(lm_summary$adjr2)
+best_model_adjr2 <- lm_summary$adjr2[lm_index]
+best_model_adjr2
+
+```</code></pre>
             </div>
             <hr class="section-rule">
             <h3> Section 5: Train-Validation Split</h3>
