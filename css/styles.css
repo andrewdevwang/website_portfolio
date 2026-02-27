@@ -122,14 +122,21 @@ body.light .project-box:hover {
 .nav-btn {
   display: inline-flex;
   align-items: center;
-  padding: 0;
+  padding: 10px 10px;
   text-decoration: none;
   color: inherit;
   transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .nav-btn:hover {
-  opacity: 0.8;
+  opacity: 0.9;
+  background-color: #2a2d2f;
+  border-radius: 6px;
+}
+
+/* Light-mode navbar button hover */
+body.light .nav-btn:hover {
+  background-color: #e0e0e0;
 }
 
 /* Right-side icons */
@@ -190,10 +197,11 @@ body.light .section-rule {
 
 
 .profile-picture {
-  width: 100%;
+  display: block;
+  width: 160px;
   height: auto;
   border-radius: 50%;
-  margin-left: 20%
+  margin: 1rem auto 0 auto;
 }
 
 @media (max-width: 768px) {
