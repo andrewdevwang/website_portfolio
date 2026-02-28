@@ -12,8 +12,7 @@
           '</div>' +
           
           '<div class="nav-middle">' +
-            '<a href="#who_i_am" class="nav-btn" role="button">Who I Am</a>' +
-            '<a href="#explore_my_projects" class="nav-btn" role="button">Explore My Projects</a>' +
+            '<a href="#explore_projects" class="nav-btn" role="button">Explore Projects</a>' +
             '<a href="#technical_skills" class="nav-btn" role="button">Technical Skills</a>' +
             '<a href="#contact_me" class="nav-btn" role="button">Contact Me</a>' +
           '</div>' +

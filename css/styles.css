@@ -116,7 +116,7 @@ body.light .project-box:hover {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  gap: 2rem;
+  gap: 0.4rem;
 }
 
 .nav-btn {
@@ -207,6 +207,21 @@ body.light .section-rule {
 @media (max-width: 768px) {
   .who-i-am-container {
     flex-direction: column;
+  }
+
+  /* Make technical skills icons wrap nicely on smaller screens */
+  .tech-skill-logos {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+
+  .tech-item {
+    width: 40%;
+  }
+
+  .tech-skill-logos img {
+    width: 72px;
+    height: 72px;
   }
 }
 
