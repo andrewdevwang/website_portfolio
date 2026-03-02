@@ -123,33 +123,98 @@ best_model_adjr2
             </div>
             <hr class="section-rule">
             <h3> Section 5: Train-Validation Split</h3>
-                <p>The data is split into 80% training, 20% validation and uses a random seed of 123. This is the standard effective split and randomness ensures its reproducibility.</p>
+                <p>The data is split into 80% training, 20% validation and uses a random seed of 1. This is the standard effective split and randomness ensures its reproducibility.</p>
             <div class="code-section">
-<pre></code></pre>
+<pre>## Divide Training/Testing Set
+
+```{r}
+set.seed(1)
+train.index <- createDataPartition(Walmart$Purchase,p=0.8,list=FALSE)
+train.df <- Walmart[train.index,]
+valid.df <- Walmart[-train.index,]
+rm(train.index)
+```</code></pre>
             </div>
             <hr class="section-rule">
             <h3> Section 6: Linear Regression Model</h3>
-                <p></p>
+                <p>A multiple linear regression model serves as the baseline for its simplicity, 10-fold cross-validation reduces bias and predictors are evaluated for their accuracy using R-squared, RMSE and MAE.</p>
             <div class="code-section">
-<pre></code></pre>
+<pre>## Run Model 1 Linear Regression
+
+```{r}
+linearRegressionModel1 <- lm(Purchase ~ ., data = train.df)
+
+#Cross Validation 10x
+crossValidationModel1 <- train(Purchase ~ ., data = train.df, method = "lm", trControl = trainControl(method = "cv", number = 10))
+crossValidationModel1
+```
+
+# Run on Validation Set
+```{r}
+test_results <- predict(crossValidationModel1,newdata=valid.df)
+actuals <- valid.df$Purchase
+valid_r2 <- cor(test_results,actuals)^2
+valid_r2
+valid_rmse <- sqrt(mean((test_results - actuals)^2))
+valid_rmse
+valid_mae <- mean(abs(test_results - actuals))
+valid_mae
+```</code></pre>
             </div>
             <hr class="section-rule">
             <h3> Section 7: Random Forest Model</h3>
-                <p></p>
+                <p>Parrelel processing is enabled by utilizing multiple CPU cores, which speed up computationally intensive models like random forst. This model uses 10-fold cross-validation, 200 trees, and specified hyperparameters to capture nonlinear relationships. Then validated and compared to the linear regression model.</p>
             <div class="code-section">
-<pre></code></pre>
-            </div>
-            <hr class="section-rule">
-            <h3> Section 8: Model Comparison</h3>
-                <p></p>
-            <div class="code-section">
-<pre></code></pre>
+<pre># Model 2
+
+## Set up parallel processing
+```{r}
+cl <- makePSOCKcluster(detectCores()-1)
+registerDoParallel(cl)
+
+```
+
+
+## Random Forest
+```{r}
+#CrossValidation setup
+control <- trainControl(method="cv",number =10)
+
+#Parameters for RandomForest Model
+tuneGrid <- expand.grid(
+  mtry=27,
+  splitrule="extratrees",
+  min.node.size=5
+)
+
+#Training RF model
+set.seed(1)
+randomForestModel <- train(
+  Purchase~.,
+  data=train.df,
+  method="ranger",
+  trControl=control,
+  tuneGrid=tuneGrid,
+  num.trees = 200
+  )
+print(randomForestModel)
+
+stopCluster(cl)
+
+```
+
+## Validate Random Forest on Valid Set
+```{r}
+rf_test_results <- predict(randomForestModel,newdata = valid.df)
+rf_actuals <- valid.df$Purchase
+rf_valid_r2 <- cor(rf_test_results,rf_actuals)^2
+rf_valid_r2
+```</code></pre>
             </div>
             <hr class="section-rule">
             <h3> Conclusion</h3>
-                <p></p>
-            <div class="code-section">
-<pre></code></pre>
+                <p>Overall, The random forest model slightly outperformed the linear regression model, achieving an R-squared of 0.6549 in cross-validation and 0.653 on the test set compared to 0.6403 and 0.6387. 
+                    The analysis indicated that male shoppers aged 26-35 led to the largest total purchase amounts particularly in product catergories 1 and 5 while recognizing that female shoppers had high spending in category 1.</p>
             </div>
 
 
