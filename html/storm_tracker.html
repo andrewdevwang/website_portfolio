@@ -19,12 +19,238 @@
             <p>StormChaser is program that reads raw hurricane observation records, groups them into structured data based on intensity using wind and pressure, filters for major hurricanes, and sorts the severe storms by intensity.</p>
             <hr class="section-rule">
             <h3>Section 1: Project Setup</h3>
+            <p>The first part of this program prepares the variables and data that will be read from the storm data.</p>
+            <div class="code-section">
+<pre><code>public class StormChaser {
+    public static void main(String[] args) {
+
+        final int MAX_STORMS = 300;
+
+        Storm[] list = new Storm[MAX_STORMS];  // Creates array of Storms
+        Storm currentStorm;                   // Storm returned by GetStorm
+        int nStorms = 0;                      // Number of category 3+ storms stored
+        int total = 0;                        // Total storms read from file</code></pre>
+            </div>
+
+            <hr class="section-rule">
+            <h3>Section 2: Reading the data file</h3>
+            <p>The scanner object is used to read the file contents, while a try-catch prevents the program from crashing if the file is not found.</p>
+
+            <div class="code-section">
+                <pre><code>Scanner fileInput;
+
+try {
+    System.out.println("Opening hurricane data file...");
+    fileInput = new Scanner(new File("hurricane.data"));
+}
+catch(FileNotFoundException e){
+    System.err.println("FileNotFoundException: " + e.getMessage());
+    return;
+}
+
+System.out.println("File opened successfully...");
+System.out.println("Reading file...");</code></pre>
+</div>
+            <h3>Section 3: Filtering</h3>
+            <p>In this section, the program will go through each storm and add the storm to the array if it matches the criteria, or category in this case category 3 and above.</p>
+
+            <div class="code-section">
+                <pre><code>while(fileInput.hasNextLine()) {
+
+    currentStorm = GetStorm(fileInput);
+    total++;
+
+    if(currentStorm.getCategory() >= 3) {
+        list[nStorms] = currentStorm;
+        nStorms++;
+    }
+}
+
+System.out.println("Number of storms: " + total);
+System.out.println("Hurricanes with category 3 and above: " + nStorms);</code></pre>
+            </div>
+    </div>
+    <div id="main-content">
+            <hr class="section-rule">
+            <h3>Section 4: Initializing storm objects</h3>
+            <p>In java, you must declare and initialize variables, this means that depending on the type of value a different type may be assigned in order to inialize the variable type.</p>
+
+            <div class="code-section">
+                <pre><code>public static Storm GetStorm(Scanner in) {
+
+    int year = 0, month = 0, day = 0;
+    int sequence = 0, wind = 0, pressure = 0;
+    String name;
+    int current = 0, beginDate = 0, duration = 0;
+    int skip = 0;
+    double junk = 0.0;
+    Storm newStorm;
+
+    year = in.nextInt();
+    month = in.nextInt();
+    day = in.nextInt();
+    skip = in.nextInt();
+    sequence = in.nextInt();
+    name = in.next();
+    junk = in.nextDouble();
+    junk = in.nextDouble();
+    wind = in.nextInt();
+    pressure = in.nextInt(); </code></pre>
+            </div>
+    </div>
+    <div id="main-content">
+            <hr class="section-rule">
+            <h3>Section 5: </h3>
             <p></p>
 
             <div class="code-section">
-                <pre><code>
+                <pre><code>beginDate = year * 10000 + month * 100 + day;
+duration = 6;
 
-                </code></pre>
+newStorm = new Storm(beginDate, duration, name, wind, pressure);
+current = sequence;
+
+while(in.hasNextLine() && current == sequence) {
+
+    duration += 6;
+    newStorm.setDuration(duration);
+    newStorm.setWind(wind);
+    newStorm.setPressure(pressure);
+
+    year = in.nextInt();
+    month = in.nextInt();
+    day = in.nextInt();
+    skip = in.nextInt();
+    sequence = in.nextInt();
+    name = in.next();
+    junk = in.nextDouble();
+    junk = in.nextDouble();
+    wind = in.nextInt();
+    pressure = in.nextInt();
+}
+
+return newStorm;
+}</code></pre>
+            </div>
+    </div>
+    <div id="main-content">
+            <hr class="section-rule">
+            <h3>Section 6: Tracking and Updating</h3>
+            <p>Many storms have multiple records over time, as they as being recorded and tracked. This means that the storm's records must be updated as new data is read.</p>
+
+            <div class="code-section">
+                <pre><code>public static void DisplayStorms(String title, Storm[] list, int nStorms) {
+
+    System.out.println(title + "\n");
+
+    System.out.println("Begin Date Duration Name Category Maximum Minimum");
+    System.out.println(" (hours) Winds (mph) Press. (mb)");
+    System.out.println("----------------------------------------------------------------");
+
+    for(int k = 0; k < nStorms; k++)
+        System.out.print(list[k].toString());
+
+    System.out.println("\n");
+}</code></pre>
+            </div>
+    </div>
+        <div id="main-content">
+            <hr class="section-rule">
+            <h3>Section 7: </h3>
+            <p></p>
+
+            <div class="code-section">
+                <pre><code>public static void Sort(Storm[] stormList, int n) {
+
+    int pass = 0, k, switches;
+    Storm temp;
+
+    switches = 1;
+
+    while(switches != 0) {
+
+        switches = 0;
+        pass++;
+
+        for(k = 0; k < n - pass; k++) {
+
+            if(stormList[k].getCategory() < stormList[k+1].getCategory()) {
+
+                temp = stormList[k];
+                stormList[k] = stormList[k+1];
+                stormList[k+1] = temp;
+
+                switches = 1;
+            }
+        }
+    }
+}</code></pre>
+            </div>
+    </div>
+        <div id="main-content">
+            <hr class="section-rule">
+            <h3>Section 8: </h3>
+            <p></p>
+
+            <div class="code-section">
+                <pre><code>public class Storm {
+
+    private final double KnotsToMPH = 1.15;
+
+    private int beginDate;
+    private int duration;
+    private String name;
+    private int category;
+    private int wind;
+    private int pressure;</code></pre>
+            </div>
+    </div>
+        <div id="main-content">
+            <hr class="section-rule">
+            <h3>Section 9: </h3>
+            <p></p>
+
+            <div class="code-section">
+                <pre><code>public String toString() {
+
+    return String.format(
+        "%9d %8d %10s %4d %9d %10d\n",
+        beginDate,
+        duration,
+        name,
+        category,
+        wind,
+        pressure
+    );
+}</code></pre>
+            </div>
+    </div>
+        <div id="main-content">
+            <hr class="section-rule">
+            <h3>Section 10: </h3>
+            <p></p>
+
+            <div class="code-section">
+                <pre><code>public String toString() {
+
+    return String.format(
+        "%9d %8d %10s %4d %9d %10d\n",
+        beginDate,
+        duration,
+        name,
+        category,
+        wind,
+        pressure
+    );
+}</code></pre>
+            </div>
+    </div>
+
+
+
+
+            
+
             </div>
         </div> <!-- end of main-content -->
     </main>
