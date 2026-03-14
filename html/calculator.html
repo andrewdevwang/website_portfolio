@@ -16,103 +16,216 @@
         <div id="main-content">
             <hr class="section-rule">
             <h3>Project Overview</h3>
-            <p></p>
+            <p>This project builds a graphical calculator using Java Swing. The application allows users to preform basic arithmetic operations such as addition, subtraction, multiplication, and division.</p>
             <hr class="section-rule">
             <h3> Section 1: Project Setup</h3>
-            <p></p>
+            <p>In this section, variables are initialized as doubles, in addition a string variable is initialized to store the mathematical operations used.</p>
             <div class="code-section">
-                <pre><code>
-
-                </code></pre>
+                <pre><code>/**
+ * Initializes the variables for Calculator
+ */
+double firstnum = 0.0;
+double secondnum = 0.0;
+double result = 0.0;
+String operation;</code></pre>
             </div>
                 <hr class="section-rule">
-            <h3> Section 2: </h3>
-            <p></p>
+            <h3> Section 2: GUI Initialization</h3>
+            <p>Using Java Swing we can initialize each button and display screen for the calculator.</p>
             <div class="code-section">
-                <pre><code>
+                <pre><code>public Calculator() {
+    initComponents();
+}
 
-                </code></pre>
+private void initComponents() {
+
+    jtxtDisplay = new javax.swing.JTextField();
+    jBtn1 = new javax.swing.JButton();
+    jBtn2 = new javax.swing.JButton();
+    jBtn3 = new javax.swing.JButton();
+    jBtn5 = new javax.swing.JButton();
+    jBtn4 = new javax.swing.JButton();
+    jBtn6 = new javax.swing.JButton();
+    jBtn8 = new javax.swing.JButton();
+    jBtn7 = new javax.swing.JButton();
+    jBtn9 = new javax.swing.JButton();
+    jBtn0 = new javax.swing.JButton();
+    jBtnDecimal = new javax.swing.JButton();
+    jBtnPlusMinus = new javax.swing.JButton();
+    jBtnClear = new javax.swing.JButton();
+    jBtnAdd = new javax.swing.JButton();
+    jBtnSubtract = new javax.swing.JButton();
+    jBtnDivide = new javax.swing.JButton();
+    jBtnMultiply = new javax.swing.JButton();
+    jBtnEqual = new javax.swing.JButton();</code></pre>
             </div>
                 <hr class="section-rule">
-            <h3> Section 3: </h3>
+            <h3> Section 3: Configuring GUI Appearance</h3>
             <p></p>
             <div class="code-section">
-                <pre><code>
+                <pre><code>setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-                </code></pre>
+jtxtDisplay.setFont(new java.awt.Font("Tahoma", 1, 24));
+jtxtDisplay.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+jBtn1.setFont(new java.awt.Font("Tahoma", 1, 24));
+jBtn1.setText("1");
+jBtn1.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jBtn1ActionPerformed(evt);
+    }
+});
+
+jBtn2.setFont(new java.awt.Font("Tahoma", 1, 24));
+jBtn2.setText("2");
+jBtn2.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jBtn2ActionPerformed(evt);
+    }
+});</code></pre>
             </div>
                 <hr class="section-rule">
-            <h3> Section 4: </h3>
+            <h3> Section 4: Layout and Structure</h3>
             <p></p>
             <div class="code-section">
-                <pre><code>
+                <pre><code>javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+getContentPane().setLayout(layout);
 
-                </code></pre>
+layout.setHorizontalGroup(
+    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(layout.createSequentialGroup()
+        .addGap(47, 47, 47)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addComponent(jtxtDisplay)</code></pre>
             </div>
                 <hr class="section-rule">
-            <h3> Section 5: </h3>
+            <h3> Section 5: Event Handlers for Input</h3>
             <p></p>
             <div class="code-section">
-                <pre><code>
+                <pre><code>private void jBtn1ActionPerformed(java.awt.event.ActionEvent evt) {
+    String enterNum = jtxtDisplay.getText() + jBtn1.getText();
+    jtxtDisplay.setText(enterNum);
+}
 
-                </code></pre>
+private void jBtn2ActionPerformed(java.awt.event.ActionEvent evt) {
+    String enterNum = jtxtDisplay.getText() + jBtn2.getText();
+    jtxtDisplay.setText(enterNum);
+}</code></pre>
             </div>
                 <hr class="section-rule">
-            <h3> Section 6: </h3>
+            <h3> Section 6: Storing operations</h3>
             <p></p>
             <div class="code-section">
-                <pre><code>
-
-                </code></pre>
+                <pre><code>private void jBtnAddActionPerformed(java.awt.event.ActionEvent evt) {
+    firstnum = Double.parseDouble(jtxtDisplay.getText());
+    jtxtDisplay.setText("");
+    operation = "+";
+}</code></pre>
             </div>
                 <hr class="section-rule">
-            <h3> Section 7: </h3>
+            <h3> Section 7: Preforming Calculations</h3>
             <p></p>
             <div class="code-section">
-                <pre><code>
+                <pre><code>private void jBtnEqualActionPerformed(java.awt.event.ActionEvent evt) {
 
-                </code></pre>
+    secondnum = Double.parseDouble(jtxtDisplay.getText());
+    String answer;
+
+    switch(operation)
+    {
+        case "+":
+            result = firstnum + secondnum;
+            break;
+
+        case "-":
+            result = firstnum - secondnum;
+            break;
+
+        case "/":
+            result = firstnum / secondnum;
+            break;
+
+        case "*":
+            result = firstnum * secondnum;
+            break;
+    }
+
+    answer = String.format("%.3f", result);
+    jtxtDisplay.setText(answer);
+}
+private void jBtnClearActionPerformed(java.awt.event.ActionEvent evt) {
+    jtxtDisplay.setText("");
+}
+private void jBtnPlusMinusActionPerformed(java.awt.event.ActionEvent evt) {
+
+    if(!jtxtDisplay.getText().equals(""))
+    {
+        double value = Double.parseDouble(jtxtDisplay.getText());
+        value *= -1;
+        jtxtDisplay.setText(String.format("%.3f", value));
+    }
+}
+private void jBtnDecimalActionPerformed(java.awt.event.ActionEvent evt) {
+
+    if(jtxtDisplay.getText().indexOf(".") < 0)
+    {
+        String enterNum = jtxtDisplay.getText() + jBtnDecimal.getText();
+        jtxtDisplay.setText(enterNum);
+    }
+}</code></pre>
             </div>
                 <hr class="section-rule">
-            <h3> Section 8: </h3>
+            <h3> Section 8: Application Launching</h3>
             <p></p>
             <div class="code-section">
-                <pre><code>
+                <pre><code>public static void main(String args[]) {
 
-                </code></pre>
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info :
+             javax.swing.UIManager.getInstalledLookAndFeels()) {
+
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
+            }
+        }
+
+    } catch (Exception ex) {
+        java.util.logging.Logger.getLogger(Calculator.class.getName())
+        .log(java.util.logging.Level.SEVERE, null, ex);
+    }
+
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new Calculator().setVisible(true);
+        }
+    });
+}</code></pre>
             </div>
                 <hr class="section-rule">
-            <h3> Section 9: </h3>
+            <h3> Section 9: Declaring Variables</h3>
             <p></p>
             <div class="code-section">
-                <pre><code>
+                <pre><code>private javax.swing.JButton jBtn0;
+private javax.swing.JButton jBtn1;
+private javax.swing.JButton jBtn2;
+private javax.swing.JButton jBtn3;
+private javax.swing.JButton jBtn4;
+private javax.swing.JButton jBtn5;
+private javax.swing.JButton jBtn6;
+private javax.swing.JButton jBtn7;
+private javax.swing.JButton jBtn8;
+private javax.swing.JButton jBtn9;
+private javax.swing.JButton jBtnAdd;
+private javax.swing.JButton jBtnClear;
+private javax.swing.JButton jBtnDecimal;
+private javax.swing.JButton jBtnDivide;
+private javax.swing.JButton jBtnEqual;
+private javax.swing.JButton jBtnMultiply;
+private javax.swing.JButton jBtnPlusMinus;
+private javax.swing.JButton jBtnSubtract;
+private javax.swing.JTextField jtxtDisplay;</code></pre>
 
-                </code></pre>
-            </div>
-                <hr class="section-rule">
-            <h3> Section 10: </h3>
-            <p></p>
-            <div class="code-section">
-                <pre><code>
-
-                </code></pre>
-            </div>
-                <hr class="section-rule">
-            <h3> Section 11: </h3>
-            <p></p>
-            <div class="code-section">
-                <pre><code>
-
-                </code></pre>
-            </div>
-                <hr class="section-rule">
-            <h3> Section 12: </h3>
-            <p></p>
-            <div class="code-section">
-                <pre><code>
-
-                </code></pre>
-            </div>
             
         </div> <!-- end of main-content -->
     </main>

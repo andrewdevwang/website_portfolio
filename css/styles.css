@@ -154,6 +154,10 @@ body.light .nav-btn:hover {
 /* Logo theme (toggling light mode) */
 .nav-icon, #themeToggle img { filter: none; }
 body.light .nav-icon, body.light #themeToggle img { filter: invert(1) brightness(1.2) contrast(1); }
+/* aw_logo specifically */
+body.light .nav-left .nav-logo {
+  filter: invert(1) brightness(1.2) contrast(1);
+}
 
 
 /* Light theme (toggling light mode) */
@@ -204,7 +208,35 @@ body.light .section-rule {
   margin: 1rem auto 0 auto;
 }
 
+/* Scrollable navbar on navbar */
 @media (max-width: 768px) {
+  .nav-middle {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #636363 transparent;
+  }
+
+  .nav-middle::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .nav-middle::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .nav-middle::-webkit-scrollbar-thumb {
+    background-color: #636363;
+    border-radius: 999px;
+  }
+
+  .nav-middle .nav-btn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
   .who-i-am-container {
     flex-direction: column;
   }
