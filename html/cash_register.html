@@ -63,8 +63,8 @@ do
         cin >> quantity;</code></pre>
             </div>
                         <hr class="section-rule">
-            <h3>Section 3:</h3>
-            <p></p>
+            <h3>Section 3: Product Identification and Price</h3>
+            <p>To determine the product's price, we assign the identification number, price, and tax rate in accordance with the product.</p>
 
             <div class="code-section">
                 <pre><code>// Switch statement to determine the price and tax rate
@@ -126,8 +126,8 @@ switch (productID)
 }</code></pre>
             </div>
                         <hr class="section-rule">
-            <h3>Section 4:</h3>
-            <p></p>
+            <h3>Section 4: Sales Calculations</h3>
+            <p>Once the product is identified,these calculations update values continiously as the items are added to the value.</p>
 
             <div class="code-section">
                 <pre><code>// Calculations to calculate the subtotal, salesTax, and totalSale
@@ -142,8 +142,8 @@ cout << "Enter the next Product ID (-1 to exit): ";
 cin >> productID;</code></pre>
             </div>
                         <hr class="section-rule">
-            <h3>Section 5:</h3>
-            <p></p>
+            <h3>Section 5: Displaying the Information</h3>
+            <p>Now that the data is calculated, it is displated in the proper format for the user.</p>
 
             <div class="code-section">
                 <pre><code>// Calculate all sales during the loop
@@ -160,8 +160,8 @@ salesTax = 0.00;
 totalSale = 0.00;</code></pre>
             </div>
                         <hr class="section-rule">
-            <h3>Section 6:</h3>
-            <p></p>
+            <h3>Section 6: Processing Additional Sales</h3>
+            <p>If there are multiple sales, the program will ask the user whether they would like to continue or end the transaction.</p>
 
             <div class="code-section">
                 <pre><code>// Asks if there is another sale
@@ -171,9 +171,8 @@ cin >> anotherSale;
 } while (anotherSale == 1);</code></pre>
             </div>
                         <hr class="section-rule">
-            <h3>Section 7:</h3>
-            <p></p>
-
+            <h3>Section 7: Displaying the Final Summary</h3>
+            <p>Once all transactions are complete,the program will display the total amount of cash that should be in the drawer.</p>
             <div class="code-section">
                 <pre><code>// Displays how much is in the cash drawer at the end
 cout << "Total in Cash Drawer is: $" << cashDrawer + allSale << setprecision(2) << endl;
