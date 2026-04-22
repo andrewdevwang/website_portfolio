@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Calculator</title>
+<style>
+  :root {
+    --pad: 12px;
+    --btn-size: 64px;
+    --gap: 8px;
+    --accent: #2c7be5;
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: #f4f6f8;
+  }
+  .calc {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(10,20,30,0.08);
+    width: 360px;
+  }
+  .display {
+    font-weight: 700;
+    font-size: 28px;
+    height: 64px;
+    width: 100%;
+    padding: 0 14px;
+    text-align: right;
+    border: 1px solid #e6e9ee;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    background: #fbfdff;
+    box-sizing: border-box;
+  }
+  .display input {
+    border: none;
+    outline: none;
+    font-size: 28px;
+    width: 100%;
+    background: transparent;
+    text-align: right;
+    padding-right: 6px;
+  }
+  .keys {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) 80px;
+    grid-auto-rows: var(--btn-size);
+    gap: var(--gap);
+  }
+  button {
+    font-size: 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #f1f4f8;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  }
+  button.op {
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+  }
+  button.equal {
+    grid-column: 4 / 5;
+    grid-row: 5 / 6;
+    height: calc(var(--btn-size) * 1.1);
+    align-self: stretch;
+  }
+  button.clear {
+    grid-column: 1 / 3;
+    background: #ff6b6b;
+    color: white;
+    font-weight: 700;
+  }
+  .wide {
+    grid-column: 1 / 3;
+  }
+</style>
+</head>
+<body>
+
+<div class="calc" role="application" aria-label="Simple calculator">
+  <!-- Display -->
+  <div class="display" aria-live="polite">
+    <input id="display" type="text" value="" readonly aria-label="Calculator display" />
+  </div>
+
+  <!-- Buttons -->
+  <div class="keys">
+    <button id="btn1">1</button>
+    <button id="btn2">2</button>
+    <button id="btn3">3</button>
+    <button id="btnAdd" class="op">+</button>
+
+    <button id="btn4">4</button>
+    <button id="btn5">5</button>
+    <button id="btn6">6</button>
+    <button id="btnSubtract" class="op">-</button>
+
+    <button id="btn7">7</button>
+    <button id="btn8">8</button>
+    <button id="btn9">9</button>
+    <button id="btnDivide" class="op">/</button>
+
+    <button id="btnDecimal">.</button>
+    <button id="btn0">0</button>
+    <button id="btnPlusMinus">-/+</button>
+    <button id="btnMultiply" class="op">*</button>
+
+    <button id="btnClear" class="clear">C</button>
+    <button id="btnEqual" class="equal">=</button>
+  </div>
+</div>
+
+<script src="../java_script/calculator.js" defer></script>
+
+</body>
+</html>

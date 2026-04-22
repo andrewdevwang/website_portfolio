@@ -11,7 +11,217 @@
     <div id="navbar"></div>
     <main>
         <h1>(Java) Calculator</h1>
-        <h6>★ Built a graphical user interface calculator with 14 interactive buttons alongside a live display screen</h6>
+        <h6>★ Built a graphical user interface calculator with 18 interactive buttons alongside a live display screen</h6>
+        <!-- Calculator Demo Button -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Calculator</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #openCalc {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 18px;
+            border-radius: 10px;
+            background: #202225;
+            border: 1px solid #636363;
+            color: inherit;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #openCalc:hover {
+            border-color: #ecdfcc;
+        }
+
+        body.light #openCalc {
+            background: #DBCFBE;
+            border-color: #202225;
+        }
+
+        body.light #openCalc:hover {
+            border-color: #202225;
+        }
+
+        #calcModal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            z-index: 1001;
+            pointer-events: none;
+        }
+
+        #calcWindow {
+            position: fixed;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1002;
+            display: none;
+            pointer-events: auto;
+        }
+
+        #calcHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+            padding: 10px 12px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            background: #202225;
+            min-height: 48px;
+        }
+
+        body.light #calcHeader {
+            background: #DBCFBE;
+        }
+
+        #closeCalc {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #000;
+            background: transparent;
+            color: inherit;
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+            font-size: 20px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        #closeCalc:hover {
+            opacity: 0.9;
+        }
+
+        #calcFrame {
+            width: 380px;
+            height: 460px;
+            border: none;
+        }
+
+        #calcWindow.dragging #calcFrame {
+            pointer-events: none;
+        }
+
+        #calcHeader.dragging {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="openCalc">Open Calculator Demo</button>
+
+    <div id="calcModal">
+        <div id="calcWindow" role="dialog" aria-modal="true" aria-label="Calculator">
+            <div id="calcHeader">
+                <div id="calcTitle">Calculator Demo</div>
+                <button id="closeCalc" type="button" aria-label="Close">×</button>
+            </div>
+
+            <iframe id="calcFrame" src="calculator_demo.html" title="Calculator" scrolling="no"></iframe>
+        </div>
+    </div>
+
+    <script>
+        const calcModal = document.getElementById('calcModal');
+        const calcWindow = document.getElementById('calcWindow');
+        const openCalc = document.getElementById('openCalc');
+        const closeCalc = document.getElementById('closeCalc');
+        const calcHeader = document.getElementById('calcHeader');
+
+        function openModal() {
+            calcModal.style.display = 'flex';
+            calcWindow.style.display = 'block';
+            calcWindow.style.top = '120px';
+            calcWindow.style.left = '50%';
+            calcWindow.style.transform = 'translateX(-50%)';
+        }
+
+        function closeModal() {
+            calcModal.style.display = 'none';
+            calcWindow.style.display = 'none';
+        }
+
+        openCalc.addEventListener('click', openModal);
+        closeCalc.addEventListener('click', closeModal);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && calcWindow.style.display !== 'none') {
+                closeModal();
+            }
+        });
+
+        let dragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+        const minTopOffset = 60;
+
+        calcHeader.addEventListener('pointerdown', (e) => {
+            if (e.target.closest('#closeCalc')) return;
+
+            dragging = true;
+            calcWindow.classList.add('dragging');
+            calcHeader.classList.add('dragging');
+
+            const rect = calcWindow.getBoundingClientRect();
+
+            const currentTransform = getComputedStyle(calcWindow).transform;
+
+            if (currentTransform !== 'none') {
+                calcWindow.style.left = rect.left + 'px';
+                calcWindow.style.top = rect.top + 'px';
+                calcWindow.style.transform = 'none';
+            }
+
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+
+            calcHeader.setPointerCapture(e.pointerId);
+            e.preventDefault();
+        });
+
+        calcHeader.addEventListener('pointermove', (e) => {
+            if (!dragging) return;
+
+            const maxLeft = window.innerWidth - calcWindow.offsetWidth;
+            const maxTop = window.innerHeight - calcWindow.offsetHeight;
+
+            const minTop = minTopOffset;
+
+            const nextLeft = Math.min(Math.max(0, e.clientX - offsetX), Math.max(0, maxLeft));
+            const nextTop = Math.min(Math.max(minTop, e.clientY - offsetY), Math.max(minTop, maxTop));
+
+            calcWindow.style.left = `${nextLeft}px`;
+            calcWindow.style.top = `${nextTop}px`;
+        });
+
+        function stopDrag() {
+            dragging = false;
+            calcWindow.classList.remove('dragging');
+            calcHeader.classList.remove('dragging');
+        }
+
+        calcHeader.addEventListener('pointerup', stopDrag);
+        calcHeader.addEventListener('pointercancel', stopDrag);
+    </script>
+
+</body>
+</html>
+<!-- End of Calculator Demo Button -->
 
         <div id="main-content">
             <hr class="section-rule">
@@ -234,4 +444,3 @@ private javax.swing.JTextField jtxtDisplay;</code></pre>
     <script src="../java_script/footer.js"></script>
 </body>
 </html>
-

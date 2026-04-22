@@ -47,7 +47,7 @@
     sectionLinks.forEach(function (link) {
       link.addEventListener('click', function (e) {
         e.preventDefault();
-        var hash = this.getAttribute('href'); // like #who_i_am
+        var hash = this.getAttribute('href'); // like #Portfolio
         if (hash && hash.charAt(0) === '#') {
           window.location.href = base + '/index.html' + hash;
         }
