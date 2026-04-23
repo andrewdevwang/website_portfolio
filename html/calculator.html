@@ -6,50 +6,7 @@
     <title>Andrew Wang | Calculator</title>
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
-    <div id="navbar"></div>
-    <main>
-        <h1>(Java) Calculator</h1>
-        <h6>★ Built a graphical user interface calculator with 18 interactive buttons alongside a live display screen</h6>
-        <!-- Calculator Demo Button -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Calculator</title>
     <style>
-        body {
-            margin: 0;
-        }
-
-        #openCalc {
-            display: block;
-            margin: 20px auto 0;
-            padding: 12px 18px;
-            border-radius: 10px;
-            background: #202225;
-            border: 1px solid #636363;
-            color: inherit;
-            font-family: inherit;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        #openCalc:hover {
-            border-color: #ecdfcc;
-        }
-
-        body.light #openCalc {
-            background: #DBCFBE;
-            border-color: #202225;
-        }
-
-        body.light #openCalc:hover {
-            border-color: #202225;
-        }
-
         #calcModal {
             position: fixed;
             inset: 0;
@@ -122,106 +79,108 @@
         }
     </style>
 </head>
-
 <body>
-    <button id="openCalc">Open Calculator Demo</button>
+    <div id="navbar"></div>
+    <main>
+        <h1>(Java) Calculator</h1>
+        <h6>★ Built a graphical user interface calculator with 18 interactive buttons alongside a live display screen</h6>
+        <!-- Calculator Demo Button -->
+        <p class="download-btn-wrapper"><button id="openCalc" class="download-btn" type="button">Open Calculator Demo</button></p>
 
-    <div id="calcModal">
-        <div id="calcWindow" role="dialog" aria-modal="true" aria-label="Calculator">
-            <div id="calcHeader">
-                <div id="calcTitle">Calculator Demo</div>
-                <button id="closeCalc" type="button" aria-label="Close">×</button>
+        <div id="calcModal">
+            <div id="calcWindow" role="dialog" aria-modal="true" aria-label="Calculator">
+                <div id="calcHeader">
+                    <div id="calcTitle">Calculator Demo</div>
+                    <button id="closeCalc" type="button" aria-label="Close">×</button>
+                </div>
+
+                <iframe id="calcFrame" src="calculator_demo.html" title="Calculator" scrolling="no"></iframe>
             </div>
-
-            <iframe id="calcFrame" src="calculator_demo.html" title="Calculator" scrolling="no"></iframe>
         </div>
-    </div>
 
-    <script>
-        const calcModal = document.getElementById('calcModal');
-        const calcWindow = document.getElementById('calcWindow');
-        const openCalc = document.getElementById('openCalc');
-        const closeCalc = document.getElementById('closeCalc');
-        const calcHeader = document.getElementById('calcHeader');
+        <script>
+            const calcModal = document.getElementById('calcModal');
+            const calcWindow = document.getElementById('calcWindow');
+            const openCalc = document.getElementById('openCalc');
+            const closeCalc = document.getElementById('closeCalc');
+            const calcHeader = document.getElementById('calcHeader');
 
-        function openModal() {
-            calcModal.style.display = 'flex';
-            calcWindow.style.display = 'block';
-            calcWindow.style.top = '120px';
-            calcWindow.style.left = '50%';
-            calcWindow.style.transform = 'translateX(-50%)';
-        }
-
-        function closeModal() {
-            calcModal.style.display = 'none';
-            calcWindow.style.display = 'none';
-        }
-
-        openCalc.addEventListener('click', openModal);
-        closeCalc.addEventListener('click', closeModal);
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && calcWindow.style.display !== 'none') {
-                closeModal();
-            }
-        });
-
-        let dragging = false;
-        let offsetX = 0;
-        let offsetY = 0;
-        const minTopOffset = 60;
-
-        calcHeader.addEventListener('pointerdown', (e) => {
-            if (e.target.closest('#closeCalc')) return;
-
-            dragging = true;
-            calcWindow.classList.add('dragging');
-            calcHeader.classList.add('dragging');
-
-            const rect = calcWindow.getBoundingClientRect();
-
-            const currentTransform = getComputedStyle(calcWindow).transform;
-
-            if (currentTransform !== 'none') {
-                calcWindow.style.left = rect.left + 'px';
-                calcWindow.style.top = rect.top + 'px';
-                calcWindow.style.transform = 'none';
+            function openModal() {
+                calcModal.style.display = 'flex';
+                calcWindow.style.display = 'block';
+                calcWindow.style.top = '120px';
+                calcWindow.style.left = '50%';
+                calcWindow.style.transform = 'translateX(-50%)';
             }
 
-            offsetX = e.clientX - rect.left;
-            offsetY = e.clientY - rect.top;
+            function closeModal() {
+                calcModal.style.display = 'none';
+                calcWindow.style.display = 'none';
+            }
 
-            calcHeader.setPointerCapture(e.pointerId);
-            e.preventDefault();
-        });
+            openCalc.addEventListener('click', openModal);
+            closeCalc.addEventListener('click', closeModal);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && calcWindow.style.display !== 'none') {
+                    closeModal();
+                }
+            });
 
-        calcHeader.addEventListener('pointermove', (e) => {
-            if (!dragging) return;
+            let dragging = false;
+            let offsetX = 0;
+            let offsetY = 0;
+            const minTopOffset = 60;
 
-            const maxLeft = window.innerWidth - calcWindow.offsetWidth;
-            const maxTop = window.innerHeight - calcWindow.offsetHeight;
+            calcHeader.addEventListener('pointerdown', (e) => {
+                if (e.target.closest('#closeCalc')) return;
 
-            const minTop = minTopOffset;
+                dragging = true;
+                calcWindow.classList.add('dragging');
+                calcHeader.classList.add('dragging');
 
-            const nextLeft = Math.min(Math.max(0, e.clientX - offsetX), Math.max(0, maxLeft));
-            const nextTop = Math.min(Math.max(minTop, e.clientY - offsetY), Math.max(minTop, maxTop));
+                const rect = calcWindow.getBoundingClientRect();
 
-            calcWindow.style.left = `${nextLeft}px`;
-            calcWindow.style.top = `${nextTop}px`;
-        });
+                const currentTransform = getComputedStyle(calcWindow).transform;
 
-        function stopDrag() {
-            dragging = false;
-            calcWindow.classList.remove('dragging');
-            calcHeader.classList.remove('dragging');
-        }
+                if (currentTransform !== 'none') {
+                    calcWindow.style.left = rect.left + 'px';
+                    calcWindow.style.top = rect.top + 'px';
+                    calcWindow.style.transform = 'none';
+                }
 
-        calcHeader.addEventListener('pointerup', stopDrag);
-        calcHeader.addEventListener('pointercancel', stopDrag);
-    </script>
+                offsetX = e.clientX - rect.left;
+                offsetY = e.clientY - rect.top;
 
-</body>
-</html>
-<!-- End of Calculator Demo Button -->
+                calcHeader.setPointerCapture(e.pointerId);
+                e.preventDefault();
+            });
+
+            calcHeader.addEventListener('pointermove', (e) => {
+                if (!dragging) return;
+
+                const maxLeft = window.innerWidth - calcWindow.offsetWidth;
+                const maxTop = window.innerHeight - calcWindow.offsetHeight;
+
+                const minTop = minTopOffset;
+
+                const nextLeft = Math.min(Math.max(0, e.clientX - offsetX), Math.max(0, maxLeft));
+                const nextTop = Math.min(Math.max(minTop, e.clientY - offsetY), Math.max(minTop, maxTop));
+
+                calcWindow.style.left = `${nextLeft}px`;
+                calcWindow.style.top = `${nextTop}px`;
+            });
+
+            function stopDrag() {
+                dragging = false;
+                calcWindow.classList.remove('dragging');
+                calcHeader.classList.remove('dragging');
+            }
+
+            calcHeader.addEventListener('pointerup', stopDrag);
+            calcHeader.addEventListener('pointercancel', stopDrag);
+        </script>
+
+        <!-- End of Calculator Demo Button -->
 
         <div id="main-content">
             <hr class="section-rule">
@@ -271,7 +230,7 @@ private void initComponents() {
             </div>
                 <hr class="section-rule">
             <h3> Section 3: Configuring GUI Appearance</h3>
-            <p></p>
+            <p> Start by setting the font, alignment, button labels, and action listeners which are events such as button clicks.</p>
             <div class="code-section">
                 <pre><code>setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -296,7 +255,7 @@ jBtn2.addActionListener(new java.awt.event.ActionListener() {
             </div>
                 <hr class="section-rule">
             <h3> Section 4: Layout and Structure</h3>
-            <p></p>
+            <p> The components are positioned inside the window where buttons and displays appear. </p>
             <div class="code-section">
                 <pre><code>javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 getContentPane().setLayout(layout);
@@ -310,7 +269,7 @@ layout.setHorizontalGroup(
             </div>
                 <hr class="section-rule">
             <h3> Section 5: Event Handlers for Input</h3>
-            <p></p>
+            <p> Then the digits are appended to the display when buttons are pressed.</p>
             <div class="code-section">
                 <pre><code>private void jBtn1ActionPerformed(java.awt.event.ActionEvent evt) {
     String enterNum = jtxtDisplay.getText() + jBtn1.getText();
@@ -324,7 +283,7 @@ private void jBtn2ActionPerformed(java.awt.event.ActionEvent evt) {
             </div>
                 <hr class="section-rule">
             <h3> Section 6: Storing operations</h3>
-            <p></p>
+            <p> The numbers and operations are then stored for calculation.</p>
             <div class="code-section">
                 <pre><code>private void jBtnAddActionPerformed(java.awt.event.ActionEvent evt) {
     firstnum = Double.parseDouble(jtxtDisplay.getText());
@@ -334,7 +293,7 @@ private void jBtn2ActionPerformed(java.awt.event.ActionEvent evt) {
             </div>
                 <hr class="section-rule">
             <h3> Section 7: Preforming Calculations</h3>
-            <p></p>
+            <p> Each calculation is performed based on the stored operation.</p>
             <div class="code-section">
                 <pre><code>private void jBtnEqualActionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -386,7 +345,7 @@ private void jBtnDecimalActionPerformed(java.awt.event.ActionEvent evt) {
             </div>
                 <hr class="section-rule">
             <h3> Section 8: Application Launching</h3>
-            <p></p>
+            <p> In order to launch the application for the calculator program a UI manager is needed.</p>
             <div class="code-section">
                 <pre><code>public static void main(String args[]) {
 
@@ -414,7 +373,7 @@ private void jBtnDecimalActionPerformed(java.awt.event.ActionEvent evt) {
             </div>
                 <hr class="section-rule">
             <h3> Section 9: Declaring Variables</h3>
-            <p></p>
+            <p> At the end of the code, the variables or components used in the GUI have to be declared in the program.</p>
             <div class="code-section">
                 <pre><code>private javax.swing.JButton jBtn0;
 private javax.swing.JButton jBtn1;

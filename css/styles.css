@@ -72,6 +72,9 @@ p4 { font-size: 1.6rem; font-weight: 100; text-align: center; line-height: 1.4; 
   border: 1px solid #636363;
   color: inherit;
   text-decoration: none;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .download-btn:hover {
@@ -84,7 +87,7 @@ p4 { font-size: 1.6rem; font-weight: 100; text-align: center; line-height: 1.4; 
 
 body.light .download-btn {
   background: #DBCFBE;
-  border-color: #202225;
+  border-color: transparent;
 }
 
 body.light .download-btn:hover {
