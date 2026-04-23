@@ -20,20 +20,83 @@
             <hr class="section-rule">
             <h3>Download the Project Here</h3>
             <p class="download-btn-wrapper"><a class="download-btn" href="../project_files/student_database.accdb" download>Student Database</a></p>
-
+            <hr class="section-rule">
+            <h3>Section 1: Student Courses</h3>
+            <p> This section gives an overview sample of student courses.</p>
+            <img src="../image/student_database_courses.png" alt="Student Database Course" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+            <hr class="section-rule">
+            <h3>Section 2: Student Schedule</h3>
+            <p> This section gives an overview sample of student schedules.</p>
+            <img src="../image/student_database_schedule.png" alt="Student Database Schedule" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+            <hr class="section-rule">
+            <h3>Section 3: Student Information</h3>
+            <p> And this section gives an overview sample of student information.</p>
+            <img src="../image/student_database_student.png" alt="Student Information" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+            <hr class="section-rule">
+            <h3>Section 4: Total Credits Earned by GPA Range</h3>
+            <p> This will return the toatal credits earned by students whose GPA is between 3.0 and 3.5.</p>
             <div class="code-section">
-            </div>
-            <div class="code-section">
+                <pre><code>SELECT SUM(Student.CreditsEarned) AS TOTAL_CREDITS_EARNED
+FROM Student
+WHERE Student.GradePointAverage BETWEEN 3.0 AND 3.5;</code></pre>
             </div>
             <hr class="section-rule">
-            <h3>Section 1: Project Setup</h3>
-            <p></p>
-
+            <h3>Section 5: Average GPA by Major</h3>
+            <p> This will return the average GPA for each major.</p>
             <div class="code-section">
-                <pre><code>
-
-                </code></pre>
+                <pre><code>SELECT Student.Major, AVG(Student.GradePointAverage) AS AvgGPA
+FROM Student
+GROUP BY Student.Major;</code></pre>
             </div>
+            <hr class="section-rule">
+            <h3>Section 6: Non-Citizen Business Students</h3>
+            <p> Lists business majors who are not U.S. citizens</p>
+            <div class="code-section">
+                <pre><code>SELECT Student.Major, Student.USCitizen AS CITIZEN, Student.FirstName, Student.LastName, Student.StudentID
+FROM Student
+WHERE Student.Major='business' AND Student.USCitizen=false;</code></pre>
+            </div>
+            <hr class="section-rule">
+            <h3>Section 7: Non-Citizen Students on Probation</h3>
+            <p> Lists non-citizen students who are on probation</p>
+            <div class="code-section">
+                <pre><code>SELECT Student.StudentID, Student.FirstName, Student.LastName, Student.USCitizen, Student.Probation
+FROM Student
+WHERE Student.USCitizen = No
+AND Student.Probation = Yes;</code></pre>
+            </div>
+            <hr class="section-rule">
+            <h3>Section 8: Total Credits by Major</h3>
+            <p> Calculates the total credits earned for each major.</p>
+            <div class="code-section">
+                <pre><code>SELECT Student.Major, SUM(Student.CreditsEarned) AS TotalCredits
+FROM Student
+GROUP BY Student.Major;</code></pre>
+            </div>
+            <hr class="section-rule">
+            <h3>Section 9: Student List ordered by Last Name </h3>
+            <p> Sorts students into an ordered list by last name.</p>
+            <div class="code-section">
+                <pre><code>SELECT Student.StudentID, Student.LastName, Student.FirstName, Student.Major, Student.GradePointAverage
+FROM Student
+ORDER BY Student.LastName;</code></pre>
+            </div>
+            <hr class="section-rule">
+            <h3>Section 10: Student Course Enrollment</h3>
+            <p> Shows each student's enrolled courses.</p>
+            <div class="code-section">
+                <pre><code>SELECT Student.StudentID, Student.FirstName, Student.LastName, Schedule.[Course ID], Courses.Title
+FROM Student INNER JOIN (Courses INNER JOIN Schedule ON Courses.CourseID = Schedule.[Course ID]) ON Student.StudentID = Schedule.StudentID;</code></pre>
+            </div>
+            <hr class="section-rule">
+            <h3>Section 11: Courses GUI</h3>
+            <p> You can create GUI's in Microsoft Access using Forms. This displays a form for Course input.</p>
+            <img src="../image/student_database_courses_GUI.png" alt="Student Database Courses GUI" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+            <hr class="section-rule">
+            <h3>Section 12: Student GUI</h3>
+            <p> While this displays a GUI for Student input.</p>
+            <img src="../image/student_database_students_GUI.png" alt="Student Database Student GUI" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+            <hr class="section-rule">
         </div> <!-- end of main-content -->
     </main>
     <script src="../java_script/navbar.js"></script>

@@ -28,25 +28,60 @@
             <img src="../image/clinical_database_setup.png" alt="Clinical Database Setup" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
             <hr class="section-rule">
             <h3>Section 2: Database Appointments</h3>
-            <p></p>
+            <p> In this section you can see a sample of an appointment table within a database.</p>
             <img src="../image/clinical_database_appointments.png" alt="Clinical Database Appointments" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
             <hr class="section-rule">
             <h3>Section 3: Database Doctors</h3>
-            <p></p>
+            <p> In this section you can see a sample of a doctor table within a database.</p>
             <img src="../image/clinical_database_doctors.png" alt="Clinical Database Doctors" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
             <hr class="section-rule">
             <h3>Section 4: Database Patients</h3>
-            <p></p>
+            <p> In this section you can see a sample of a patient table within a database.</p>
             <img src="../image/clinical_database_patients.png" alt="Clinical Database Patients" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
             <hr class="section-rule">
             <h3>Section 5: Database Supplier</h3>
-            <p></p>
+            <p> In this section you can see a sample of a supplier table within a database.</p>
             <img src="../image/clinical_database_supplier.png" alt="Clinical Database Supplier" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
             <hr class="section-rule">
             <h3>Section 6: Database Supplies</h3>
-            <p></p>
+            <p> In this section you can see a sample of a supplies table within a database.</p>
             <img src="../image/clinical_database_supplies.png" alt="Clinical Database Supplies" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
             <hr class="section-rule">
+            <h3>Section 7: Patient IDs Query</h3>
+            <p> In SQL you can query tables to retrieve specific data. In this section you can see a query that retrieves all patient IDs from the appointments table.</p>
+            <div class="code-section">
+                <pre><code>SELECT Appointments.PatientID
+FROM Appointments
+ORDER BY Appointments.PatientID;</code></pre>
+            </div>
+                        <h3>Section 8: Appointment Types Query</h3>
+            <p> In this example, a query may be used in a SQL database to retrieve all appointment types from the appointments table.</p>
+            <div class="code-section">
+                <pre><code>SELECT Appointments.AppointmentType
+FROM Appointments
+ORDER BY Appointments.AppointmentType;</code></pre>
+            </div>
+                        <h3>Section 9: Today's Appointment Types Query</h3>
+            <p> A query can also be used to retrieve all appointments for today from the appointments table.</p>
+            <div class="code-section">
+                <pre><code>SELECT Appointments.AppointmentDate, Appointments.AppointmentNumber, Appointments.PatientID
+FROM Appointments
+WHERE Appointments.AppointmentDate = [Enter Today's Date in 00/00/0000 Format];</code></pre>
+            </div>
+                        <h3>Section 10: Appointments by Doctor Query</h3>
+            <p> A query can also be used to retrieve all appointments by doctor from the appointments table.</p>
+            <div class="code-section">
+                <pre><code>SELECT Appointments.DoctorID, Appointments.AppointmentDate, Appointments.PatientID, Appointments.AppointmentTime, AppointmentType
+FROM Appointments
+ORDER BY Appointments.DoctorID;</code></pre>
+            </div>
+            <h3>Section 11: Supplier List Query</h3>
+            <p> And retrieve all suppliers from the supplier table.</p>
+            <div class="code-section">
+                <pre><code>SELECT Supplier.SupplierType, Supplier.SupplierName
+FROM Supplier
+ORDER BY Supplier.SupplierName;</code></pre>
+            </div>
 
             </div>
         </div> <!-- end of main-content -->
