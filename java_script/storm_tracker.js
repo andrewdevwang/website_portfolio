@@ -90,7 +90,7 @@ async function loadAndProcessStorms() {
         if (location.protocol === 'file:') {
             throw new Error('This page is being opened via file:// so fetch() cannot load hurricane.data. Run a local server and open http://localhost/... instead.');
         }
-        const res = await fetch('hurricane.data', { cache: 'no-store' });
+        const res = await fetch('../data/hurricane.data', { cache: 'no-store' });
         if (!res.ok) {
             throw new Error(`Failed to load hurricane.data (HTTP ${res.status})`);
         }
