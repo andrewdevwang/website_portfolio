@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Storm Tracker</title>
+    <link rel="stylesheet" href="../css/storm_tracker.css">
+</head>
+<body>
+    <div class="container">
+        <p>Storm data is loaded from <code>hurricane.data</code>.</p>
+
+        <button id="processBtn" type="button">Process Storms</button>
+
+        <div class="stats" id="stats"></div>
+
+        <table id="stormTable">
+            <thead>
+                <tr>
+                    <th>Begin Date</th>
+                    <th>Duration</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Wind (mph)</th>
+                    <th>Pressure (mb)</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="../java_script/storm_tracker.js" defer></script>
+</body>
+</html>

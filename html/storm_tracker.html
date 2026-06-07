@@ -6,12 +6,185 @@
     <title>Andrew Wang | Storm Tracker</title>
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        #stormModal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            z-index: 1001;
+            pointer-events: none;
+        }
+
+        #stormWindow {
+            position: fixed;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1002;
+            display: none;
+            pointer-events: auto;
+        }
+
+        #stormHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: #202225;
+            color: inherit;
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            min-height: 48px;
+        }
+
+        body.light #stormHeader {
+            background: #DBCFBE;
+        }
+
+        #stormTitle {
+            font-weight: bold;
+        }
+
+        #closeStorm {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #000;
+            background: transparent;
+            color: inherit;
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+            font-size: 20px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        #closeStorm:hover {
+            opacity: 0.9;
+        }
+
+        #stormFrame {
+            width: 1100px;
+            height: 720px;
+            border: none;
+        }
+
+        #stormWindow.dragging #stormFrame {
+            pointer-events: none;
+        }
+
+        #stormHeader.dragging {
+            cursor: grabbing;
+        }
+    </style>
 </head>
 <body>
     <div id="navbar"></div>
     <main>
         <h1>(Java) Storm Tracker</h1>
         <h6>★ Automated a data parser that transformed over 5,000 structureless plain text hurricane records into structured tables that allow retireval by attribute</h6>
+        <!-- Storm Tracker Demo Button -->
+        <p class="download-btn-wrapper"><button id="openStorm" class="download-btn" type="button">Open Storm Tracker Demo</button></p>
+
+        <div id="stormModal">
+            <div id="stormWindow" role="dialog" aria-modal="true" aria-label="Storm Tracker">
+                <div id="stormHeader">
+                    <div id="stormTitle">Storm Tracker</div>
+                    <button id="closeStorm" type="button" aria-label="Close">×</button>
+                </div>
+
+                <iframe id="stormFrame" src="storm_tracker_demo.html" title="Storm Tracker" scrolling="yes"></iframe>
+            </div>
+        </div>
+
+        <script>
+            const stormModal = document.getElementById('stormModal');
+            const stormWindow = document.getElementById('stormWindow');
+            const openStorm = document.getElementById('openStorm');
+            const closeStorm = document.getElementById('closeStorm');
+            const stormHeader = document.getElementById('stormHeader');
+
+            function openModal() {
+                stormModal.style.display = 'flex';
+                stormWindow.style.display = 'block';
+                stormWindow.style.top = '120px';
+                stormWindow.style.left = '50%';
+                stormWindow.style.transform = 'translateX(-50%)';
+            }
+
+            function closeModal() {
+                stormModal.style.display = 'none';
+                stormWindow.style.display = 'none';
+            }
+
+            openStorm.addEventListener('click', openModal);
+            closeStorm.addEventListener('click', closeModal);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && stormWindow.style.display !== 'none') {
+                    closeModal();
+                }
+            });
+
+            let dragging = false;
+            let offsetX = 0;
+            let offsetY = 0;
+            const minTopOffset = 60;
+
+            stormHeader.addEventListener('pointerdown', (e) => {
+                if (e.target.closest('#closeStorm')) return;
+
+                dragging = true;
+                stormWindow.classList.add('dragging');
+                stormHeader.classList.add('dragging');
+
+                const rect = stormWindow.getBoundingClientRect();
+
+                const currentTransform = getComputedStyle(stormWindow).transform;
+
+                if (currentTransform !== 'none') {
+                    stormWindow.style.left = rect.left + 'px';
+                    stormWindow.style.top = rect.top + 'px';
+                    stormWindow.style.transform = 'none';
+                }
+
+                offsetX = e.clientX - rect.left;
+                offsetY = e.clientY - rect.top;
+
+                stormHeader.setPointerCapture(e.pointerId);
+                e.preventDefault();
+            });
+
+            stormHeader.addEventListener('pointermove', (e) => {
+                if (!dragging) return;
+
+                const maxLeft = window.innerWidth - stormWindow.offsetWidth;
+                const maxTop = window.innerHeight - stormWindow.offsetHeight;
+
+                const minTop = minTopOffset;
+
+                const nextLeft = Math.min(Math.max(0, e.clientX - offsetX), Math.max(0, maxLeft));
+                const nextTop = Math.min(Math.max(minTop, e.clientY - offsetY), Math.max(minTop, maxTop));
+
+                stormWindow.style.left = `${nextLeft}px`;
+                stormWindow.style.top = `${nextTop}px`;
+            });
+
+            function stopDrag() {
+                dragging = false;
+                stormWindow.classList.remove('dragging');
+                stormHeader.classList.remove('dragging');
+            }
+
+            stormHeader.addEventListener('pointerup', stopDrag);
+            stormHeader.addEventListener('pointercancel', stopDrag);
+        </script>
+        <!-- End of Storm Tracker Demo Button -->
 
         <div id="main-content">
             <hr class="section-rule">
