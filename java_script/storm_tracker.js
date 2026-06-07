@@ -84,18 +84,13 @@ function render(total, storms) {
     }
 }
 
-async function loadAndProcessStorms() {
+function loadAndProcessStorms() {
     const stats = document.getElementById('stats');
     try {
-        if (location.protocol === 'file:') {
-            throw new Error('This page is being opened via file:// so fetch() cannot load hurricane.data. Run a local server and open http://localhost/... instead.');
+        if (typeof hurricaneData === 'undefined') {
+            throw new Error('hurricaneData is not defined. Make sure hurricane_data.js is loaded.');
         }
-        const res = await fetch('../data/hurricane.data', { cache: 'no-store' });
-        if (!res.ok) {
-            throw new Error(`Failed to load hurricane.data (HTTP ${res.status})`);
-        }
-        const text = await res.text();
-        const { total, storms } = parseHurricaneData(text);
+        const { total, storms } = parseHurricaneData(hurricaneData);
         render(total, storms);
     } catch (err) {
         if (stats) {
