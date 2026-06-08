@@ -6,12 +6,185 @@
     <title>Andrew Wang | Cash Register</title>
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        #cashModal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            z-index: 1001;
+            pointer-events: none;
+        }
+
+        #cashWindow {
+            position: fixed;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1002;
+            display: none;
+            pointer-events: auto;
+        }
+
+        #cashHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: #202225;
+            color: inherit;
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            min-height: 48px;
+        }
+
+        body.light #cashHeader {
+            background: #DBCFBE;
+        }
+
+        #cashTitle {
+            font-weight: bold;
+        }
+
+        #closeCash {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #000;
+            background: transparent;
+            color: inherit;
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+            font-size: 20px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        #closeCash:hover {
+            opacity: 0.9;
+        }
+
+        #cashFrame {
+            width: 550px;
+            height: 500px;
+            border: none;
+        }
+
+        #cashWindow.dragging #cashFrame {
+            pointer-events: none;
+        }
+
+        #cashHeader.dragging {
+            cursor: grabbing;
+        }
+    </style>
 </head>
 <body>
     <div id="navbar"></div>
     <main>
         <h1>(C++) Cash Register</h1>
         <h6>★ Created a digital cash register thats able to track thousands of products, and calculate the total and tax generating a digital receipt of transactions</h6>
+        <!-- Cash Register Demo Button -->
+        <p class="download-btn-wrapper"><button id="openCash" class="download-btn" type="button">Open Cash Register Demo</button></p>
+
+        <div id="cashModal">
+            <div id="cashWindow" role="dialog" aria-modal="true" aria-label="Cash Register">
+                <div id="cashHeader">
+                    <div id="cashTitle">Cash Register</div>
+                    <button id="closeCash" type="button" aria-label="Close">×</button>
+                </div>
+
+                <iframe id="cashFrame" src="cash_register_demo.html" title="Cash Register" scrolling="yes"></iframe>
+            </div>
+        </div>
+
+        <script>
+            const cashModal = document.getElementById('cashModal');
+            const cashWindow = document.getElementById('cashWindow');
+            const openCash = document.getElementById('openCash');
+            const closeCash = document.getElementById('closeCash');
+            const cashHeader = document.getElementById('cashHeader');
+
+            function openModal() {
+                cashModal.style.display = 'flex';
+                cashWindow.style.display = 'block';
+                cashWindow.style.top = '120px';
+                cashWindow.style.left = '50%';
+                cashWindow.style.transform = 'translateX(-50%)';
+            }
+
+            function closeModal() {
+                cashModal.style.display = 'none';
+                cashWindow.style.display = 'none';
+            }
+
+            openCash.addEventListener('click', openModal);
+            closeCash.addEventListener('click', closeModal);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && cashWindow.style.display !== 'none') {
+                    closeModal();
+                }
+            });
+
+            let dragging = false;
+            let offsetX = 0;
+            let offsetY = 0;
+            const minTopOffset = 60;
+
+            cashHeader.addEventListener('pointerdown', (e) => {
+                if (e.target.closest('#closeCash')) return;
+
+                dragging = true;
+                cashWindow.classList.add('dragging');
+                cashHeader.classList.add('dragging');
+
+                const rect = cashWindow.getBoundingClientRect();
+
+                const currentTransform = getComputedStyle(cashWindow).transform;
+
+                if (currentTransform !== 'none') {
+                    cashWindow.style.left = rect.left + 'px';
+                    cashWindow.style.top = rect.top + 'px';
+                    cashWindow.style.transform = 'none';
+                }
+
+                offsetX = e.clientX - rect.left;
+                offsetY = e.clientY - rect.top;
+
+                cashHeader.setPointerCapture(e.pointerId);
+                e.preventDefault();
+            });
+
+            cashHeader.addEventListener('pointermove', (e) => {
+                if (!dragging) return;
+
+                const maxLeft = window.innerWidth - cashWindow.offsetWidth;
+                const maxTop = window.innerHeight - cashWindow.offsetHeight;
+
+                const minTop = minTopOffset;
+
+                const nextLeft = Math.min(Math.max(0, e.clientX - offsetX), Math.max(0, maxLeft));
+                const nextTop = Math.min(Math.max(minTop, e.clientY - offsetY), Math.max(minTop, maxTop));
+
+                cashWindow.style.left = `${nextLeft}px`;
+                cashWindow.style.top = `${nextTop}px`;
+            });
+
+            function stopDrag() {
+                dragging = false;
+                cashWindow.classList.remove('dragging');
+                cashHeader.classList.remove('dragging');
+            }
+
+            cashHeader.addEventListener('pointerup', stopDrag);
+            cashHeader.addEventListener('pointercancel', stopDrag);
+        </script>
+        <!-- End of Cash Register Demo Button -->
 
         <div id="main-content">
             <hr class="section-rule">

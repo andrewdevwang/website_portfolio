@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cash Register</title>
+    <link rel="stylesheet" href="../css/cash_register.css">
+</head>
+<body>
+    <div class="container">
+        <div class="input-group">
+            <label>Product ID (101-110):</label>
+            <input type="number" id="productID" placeholder="e.g. 101">
+        </div>
+        <div class="input-group">
+            <label>Quantity:</label>
+            <input type="number" id="quantity" value="1">
+        </div>
+        
+        <div class="button-group">
+            <button id="addBtn">Add to Transaction</button>
+            <button id="finishBtn" class="finish-btn">Finish Transaction</button>
+        </div>
+
+        <div id="receipt">
+            <h3>Current Receipt</h3>
+            <p>Subtotal: $<span id="currSub">0.00</span></p>
+            <p>Sales Tax: $<span id="currTax">0.00</span></p>
+            <p><strong>Total: $<span id="currTotal">0.00</span></strong></p>
+        </div>
+
+        <div class="drawer">
+            Total in Cash Drawer: $<span id="drawerTotal">0.00</span>
+        </div>
+    </div>
+
+    <script src="../java_script/cash_register.js" defer></script>
+</body>
+</html>
