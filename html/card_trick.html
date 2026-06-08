@@ -6,12 +6,185 @@
     <title>Andrew Wang | Card Trick</title>
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        #cardModal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            z-index: 1001;
+            pointer-events: none;
+        }
+
+        #cardWindow {
+            position: fixed;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1002;
+            display: none;
+            pointer-events: auto;
+        }
+
+        #cardHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: #202225;
+            color: inherit;
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            min-height: 48px;
+        }
+
+        body.light #cardHeader {
+            background: #DBCFBE;
+        }
+
+        #cardTitle {
+            font-weight: bold;
+        }
+
+        #closeCard {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #000;
+            background: transparent;
+            color: inherit;
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+            font-size: 20px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        #closeCard:hover {
+            opacity: 0.9;
+        }
+
+        #cardFrame {
+            width: 750px;
+            height: 600px;
+            border: none;
+        }
+
+        #cardWindow.dragging #cardFrame {
+            pointer-events: none;
+        }
+
+        #cardHeader.dragging {
+            cursor: grabbing;
+        }
+    </style>
 </head>
 <body>
     <div id="navbar"></div>
     <main>
         <h1>(C++) Card Trick</h1>
         <h6>★ Developed a logic based interactive card game that simulates a continuous response to player input</h6>
+        <!-- Card Trick Demo Button -->
+        <p class="download-btn-wrapper"><button id="openCard" class="download-btn" type="button">Open Card Trick Demo</button></p>
+
+        <div id="cardModal">
+            <div id="cardWindow" role="dialog" aria-modal="true" aria-label="Card Trick">
+                <div id="cardHeader">
+                    <div id="cardTitle">Card Trick</div>
+                    <button id="closeCard" type="button" aria-label="Close">×</button>
+                </div>
+
+                <iframe id="cardFrame" src="card_trick_demo.html" title="Card Trick" scrolling="yes"></iframe>
+            </div>
+        </div>
+
+        <script>
+            const cardModal = document.getElementById('cardModal');
+            const cardWindow = document.getElementById('cardWindow');
+            const openCard = document.getElementById('openCard');
+            const closeCard = document.getElementById('closeCard');
+            const cardHeader = document.getElementById('cardHeader');
+
+            function openModal() {
+                cardModal.style.display = 'flex';
+                cardWindow.style.display = 'block';
+                cardWindow.style.top = '120px';
+                cardWindow.style.left = '50%';
+                cardWindow.style.transform = 'translateX(-50%)';
+            }
+
+            function closeModal() {
+                cardModal.style.display = 'none';
+                cardWindow.style.display = 'none';
+            }
+
+            openCard.addEventListener('click', openModal);
+            closeCard.addEventListener('click', closeModal);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && cardWindow.style.display !== 'none') {
+                    closeModal();
+                }
+            });
+
+            let dragging = false;
+            let offsetX = 0;
+            let offsetY = 0;
+            const minTopOffset = 60;
+
+            cardHeader.addEventListener('pointerdown', (e) => {
+                if (e.target.closest('#closeCard')) return;
+
+                dragging = true;
+                cardWindow.classList.add('dragging');
+                cardHeader.classList.add('dragging');
+
+                const rect = cardWindow.getBoundingClientRect();
+
+                const currentTransform = getComputedStyle(cardWindow).transform;
+
+                if (currentTransform !== 'none') {
+                    cardWindow.style.left = rect.left + 'px';
+                    cardWindow.style.top = rect.top + 'px';
+                    cardWindow.style.transform = 'none';
+                }
+
+                offsetX = e.clientX - rect.left;
+                offsetY = e.clientY - rect.top;
+
+                cardHeader.setPointerCapture(e.pointerId);
+                e.preventDefault();
+            });
+
+            cardHeader.addEventListener('pointermove', (e) => {
+                if (!dragging) return;
+
+                const maxLeft = window.innerWidth - cardWindow.offsetWidth;
+                const maxTop = window.innerHeight - cardWindow.offsetHeight;
+
+                const minTop = minTopOffset;
+
+                const nextLeft = Math.min(Math.max(0, e.clientX - offsetX), Math.max(0, maxLeft));
+                const nextTop = Math.min(Math.max(minTop, e.clientY - offsetY), Math.max(minTop, maxTop));
+
+                cardWindow.style.left = `${nextLeft}px`;
+                cardWindow.style.top = `${nextTop}px`;
+            });
+
+            function stopDrag() {
+                dragging = false;
+                cardWindow.classList.remove('dragging');
+                cardHeader.classList.remove('dragging');
+            }
+
+            cardHeader.addEventListener('pointerup', stopDrag);
+            cardHeader.addEventListener('pointercancel', stopDrag);
+        </script>
+        <!-- End of Card Trick Demo Button -->
 
         <div id="main-content">
             <hr class="section-rule">
