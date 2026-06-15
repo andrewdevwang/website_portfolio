@@ -2,7 +2,7 @@
   var markup = '' +
     '<footer class="footer">' +
       '<div class="footer-content">' +
-        '<p2>© 2025 Andrew Wang. All rights reserved.</p2>' +
+        '<p2>© 2025 - 2026 Andrew Wang. All rights reserved.</p2>' +
       '</div>' +
     '</footer>';
 
