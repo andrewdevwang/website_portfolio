@@ -75,6 +75,19 @@
             border: none;
         }
 
+        @media (max-width: 768px) {
+            #stormFrame {
+                width: 92vw;
+                height: 85vh;
+            }
+
+            #stormWindow {
+                width: 92vw;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
         #stormWindow.dragging #stormFrame {
             pointer-events: none;
         }

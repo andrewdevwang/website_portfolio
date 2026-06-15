@@ -75,6 +75,19 @@
             border: none;
         }
 
+        @media (max-width: 768px) {
+            #cardFrame {
+                width: 92vw;
+                height: 85vh;
+            }
+
+            #cardWindow {
+                width: 92vw;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
         #cardWindow.dragging #cardFrame {
             pointer-events: none;
         }

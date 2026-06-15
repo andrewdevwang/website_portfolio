@@ -107,3 +107,39 @@ button:hover {
     color: #2e7d32;
     text-align: center;
 }
+
+@media (max-width: 600px) {
+    body {
+        height: auto;
+        padding: 10px;
+        display: block;
+    }
+
+    .container {
+        width: 92%;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    #receipt h3 {
+        font-size: 14px;
+    }
+
+    #receipt p {
+        font-size: 12px;
+    }
+}

@@ -77,3 +77,74 @@ button {
 button:hover {
     background: #e6e9ee;
 }
+
+@media (max-width: 768px) {
+    body {
+        height: auto;
+        padding: 10px;
+        display: block;
+    }
+
+    .container {
+        width: 92%;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    #message {
+        font-size: 1rem;
+        margin: 15px 0;
+    }
+
+    .grid {
+        gap: 10px;
+        margin: 20px auto;
+    }
+
+    .column {
+        padding: 10px;
+    }
+
+    .card {
+        padding: 8px;
+        margin: 5px 0;
+        font-size: 12px;
+    }
+
+    #controls {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .column {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .card {
+        flex: 1 1 auto;
+        min-width: 60px;
+        text-align: center;
+    }
+}
