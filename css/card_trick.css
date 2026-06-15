@@ -90,6 +90,7 @@ button:hover {
         max-width: 700px;
         margin: 0 auto;
         padding: 20px;
+        height: auto;
     }
 
     h1 {
@@ -103,18 +104,18 @@ button:hover {
     }
 
     .grid {
-        gap: 10px;
+        gap: 8px;
         margin: 20px auto;
     }
 
     .column {
-        padding: 10px;
+        padding: 8px;
     }
 
     .card {
-        padding: 8px;
-        margin: 5px 0;
-        font-size: 12px;
+        padding: 6px;
+        margin: 4px 0;
+        font-size: 11px;
     }
 
     #controls {
@@ -130,21 +131,22 @@ button:hover {
 }
 
 @media (max-width: 480px) {
+    .container {
+        height: auto;
+    }
+
     .grid {
         grid-template-columns: 1fr;
-        gap: 8px;
+        gap: 10px;
     }
 
     .column {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        justify-content: center;
+        padding: 10px;
     }
 
     .card {
-        flex: 1 1 auto;
-        min-width: 60px;
-        text-align: center;
+        padding: 8px;
+        margin: 6px 0;
+        font-size: 12px;
     }
 }

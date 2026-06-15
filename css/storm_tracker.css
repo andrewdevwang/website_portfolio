@@ -85,6 +85,7 @@ tr:hover {
         padding: 15px;
         max-height: none;
         overflow-y: visible;
+        height: auto;
     }
 
     h1 {
