@@ -90,8 +90,8 @@
       e.preventDefault();
       var href = this.getAttribute('href');
       if (href === '#') {
-        // Logo link - refresh page
-        location.reload();
+        // Logo link - refresh to homepage
+        window.location.href = 'https://andrewdevwang.vercel.app';
       } else {
         // Section links - scroll to section
         var targetId = href.substring(1);
