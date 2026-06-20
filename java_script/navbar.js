@@ -90,8 +90,8 @@
       e.preventDefault();
       var href = this.getAttribute('href');
       if (href === '#') {
-        // Logo link - scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Logo link - refresh page
+        location.reload();
       } else {
         // Section links - scroll to section
         var targetId = href.substring(1);
