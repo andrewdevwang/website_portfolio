@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrew Wang | ResumeOps Engine</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div id="navbar"></div>
+    <main>
+        <h1>(n8n) ResumeOps Engine</h1>
+        <h6>★ Automated the tailoring of resumes to thousands of applications</h6>
+        <div id="main-content">
+            <hr class="section-rule">
+            <h3>Project Overview</h3>
+            <p style="text-align: center;">This project is an automated, end-to-end resume tailoring system built on a self-hosted n8n platform. It integrates job board APIs, web scrapers, and Large Language Models (LLMs) to automatically ingest, evaluate, and customize your resumes for high-volume job applications.</p>
+            
+            <hr class="section-rule">
+            <h3>Section 1: Input Original Resume</h3>
+            <p>We kick off the pipeline by setting up an automated trigger that fires whenever a condition is met. The workflow will then fetch your base resume (using your API key) directly from Google Drive, Google Docs, GitHub, or your preferred cloud storage provider.</p>
+            <img src="../image/n8n_input_original_resume_step1.png" alt="Input Original Resume" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+            <hr class="section-rule">
+
+            <h3>Section 2: Find Daily Job Postings</h3>
+            <p>The workflow triggers an Apify Actor through the Apify API to scrape job postings across target job boards, with a configurable batch limiter per execution for storage and scrapping of positions.</p> 
+            <img src="../image/n8n_find_daily_job_postings_step2.png" alt="Find Daily Job Postings" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+            <hr class="section-rule">
+
+            <h3>Section 3: LLM Review</h3>
+            <p>An LLM API of your choice then evaluates the scraped job listings against your original resume to calculate a match score. Postings that exceed the match threshold are automatically rewritten with keywords aligned to the job description.</p> 
+            <img src="../image/n8n_llm_review_step3.png" alt="AI Review" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+            <hr class="section-rule">
+
+            <h3>Section 4: Output Enhanced Resume</h3>
+            <p>The tailored content is then compiled into an ATS-friendly JavaScript layout, and then converted into a high-quality PDF file, which is automatically saved to your connected cloud storage API (e.g., Google Drive, Google Docs, GitHub, or Gmail).</p>
+            <img src="../image/n8n_output_enhanced_resume_step4.png" alt="Output Enhanced Resume" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+                        
+            <div class="code-section">
+            </div>
+        </div> <!-- end of main-content -->
+    </main>
+    <script src="../java_script/navbar.js"></script>
+    <div id="footer"></div>
+    <script src="../java_script/footer.js"></script>
+</body>
+</html>
